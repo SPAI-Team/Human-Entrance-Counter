@@ -5,15 +5,24 @@ from peekingduck.pipeline.nodes.node import AbstractNode
 
 class Node(AbstractNode):
     """
-    ===.
+    Assign unique ID and centroids coordinate based on input bboxes using
+    Euclidean distance as update mechanism.
+
+    Inputs:
+        |img|
+
+        |bboxes|
+
+    Outputs:
+        |trackers|
 
     Args:
-        targetData (:obj:`List`): 
-            Keys of target data in pipeline to be printed.
-            e.g. ['bboxes','bbox_labels']
+        maxDistance (:obj:`int`): **default = 50
+            max distance between centroids to assign a new centroid Id
         
-        skipFrames (:obj:`int`):
-            Number of frames to be skipped before printing the target data.
+        maxDisappeared (:obj:`int`): **default = 40
+            max number of frame for an object to be disappeared before 
+            assigning new centroid Id.
         
     """
 
@@ -30,27 +39,28 @@ class Node(AbstractNode):
         self.ct = CentroidTracker(
                             maxDistance=kwargs.get('maxDistance', 50),
                             maxDisappeared=kwargs.get('maxDisappeared', 40)
-                        ) 
+                        )
         
 
     def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:  
-        """ This node does ___.
+        """ This node does centroid tracking based on input bboxes.
         Args:
-            inputs (dict): Dict with keys "__", "__".
+            inputs (dict): Dict with keys "img", "bboxes".
         Returns:
-            outputs (dict): Dict with keys "__".
+            outputs (dict): Dict with keys "trackers".
         """        
         height, width, _ = inputs['img'].shape
         
-        # Bounding Box Preprocessing
-        # Make a copy of the bboxes and Rescale input range from 0-1 
-        # to No. pixels
+        # Make a copy of the bboxes and 
+        # Rescale bboxes range from 0-1 to number of pixels
         bboxes = inputs['bboxes'].copy() 
         bboxes[:, [0,2]] *= width 
         bboxes[:, [1,3]] *= height 
         
-        # Obtain output dictionary with Id as key, 
-        # centroid coordinates as value
+        # Update the trackers dictionaries 
+        # with Centroid Id as key and 
+        # Centroid coordinates as value
+        #   e.g. OrderedDict([(0, array([205, 291]))])
         trackers = self.ct.update(bboxes) 
         
         return {'trackers': trackers}
