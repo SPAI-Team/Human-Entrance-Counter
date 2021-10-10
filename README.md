@@ -10,6 +10,5 @@ The project utilizes [PeekingDuck](https://github.com/aimakerspace/PeekingDuck) 
 ```bash
 conda create --name human-entrance python=3.8
 conda activate human-entrance
-pip install peekingduck
 git clone https://github.com/SPAI-Team/Human-Entrance-Counter.git
 ```
