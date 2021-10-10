@@ -4,7 +4,7 @@ from peekingduck.pipeline.nodes.node import AbstractNode
 
 class Node(AbstractNode):
     """
-    A helper class to help debugging by visualising the target data in pipeline.
+    A helper class to help debugging by printing the target data in pipeline.
 
     Inputs:
         |dataInPipe|
@@ -38,11 +38,11 @@ class Node(AbstractNode):
         
 
     def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:  # type: ignore
-        """ This node does ___.
+        """ This node does print target data for every skipFrames.
         Args:
-            inputs (dict): Dict with keys "__", "__".
+            inputs (dict): Dict with all keys in  "`dataInPipe`".
         Returns:
-            outputs (dict): Dict with keys "__".
+            outputs (dict): None
         """
         if self.curFrame % self.skipFrames == 0:
             print(*[inputs[data] for data in self.dataInPipe], sep=',')
