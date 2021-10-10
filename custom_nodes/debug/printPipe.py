@@ -6,6 +6,12 @@ class Node(AbstractNode):
     """
     A helper class to help debugging by visualising the target data in pipeline.
 
+    Inputs:
+        |dataInPipe|
+
+    Outputs:
+        |none|
+
     Args:
         targetData (:obj:`List`): 
             Keys of target data in pipeline to be printed.
@@ -19,13 +25,13 @@ class Node(AbstractNode):
     def __init__(self, config: Dict[str, Any] = None, **kwargs: Any) -> None:
         self.__name__ = ''
         self.curFrame = 0
-        self.targetData = kwargs["targetData"]
+        self.dataInPipe = kwargs["dataInPipe"]
         self.skipFrames = kwargs["skipFrames"]
-        assert len(self.targetData) != 0, "Please enter at least one target data to be printed"
+        assert len(self.dataInPipe) != 0, "Please enter at least one target data to be printed"
 
         if config is None:
             config = {
-                "input": [*self.targetData],
+                "input": [*self.dataInPipe],
                 "output": ["none"]
             }
         super().__init__(config, node_path=__name__, **kwargs)
@@ -39,7 +45,7 @@ class Node(AbstractNode):
             outputs (dict): Dict with keys "__".
         """
         if self.curFrame % self.skipFrames == 0:
-            print(*[inputs[target] for target in self.targetData], sep=',')
+            print(*[inputs[data] for data in self.dataInPipe], sep=',')
         
         self.curFrame += 1
         return {}
