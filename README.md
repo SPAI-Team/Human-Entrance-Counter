@@ -14,10 +14,12 @@ The project utilizes [PeekingDuck](https://github.com/aimakerspace/PeekingDuck) 
 
 ### Software Required:
 - [Anaconda](https://www.anaconda.com/products/individual)
+- [git](https://git-scm.com/downloads)
 
 ### Requirements
 ```bash
 conda create --name human-entrance python=3.8
 conda activate human-entrance
 git clone https://github.com/SPAI-Team/Human-Entrance-Counter.git
+pip install peekingduck
 ```
