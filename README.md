@@ -11,9 +11,9 @@ The project utilizes [PeekingDuck](https://github.com/aimakerspace/PeekingDuck) 
 ## To-Do
 ### PeekingDuck Model
 - [x] Implement Centroid Tracking Custom Nodes
-- [ ] Implement Drawing Centroid with Id Custom Nodes
 - [ ] Count Objects Based on Centroid Movement Custom Nodes
 - [ ] Logging of Total Individual Custom Nodes
+- [ ] Implement Drawing Centroid with Id Custom Nodes
 - [ ] Integration of Python Scripts / Peekingduck CLI with Web Application
 
 ### Front-End Web Application
