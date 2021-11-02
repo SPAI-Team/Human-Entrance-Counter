@@ -17,7 +17,7 @@ The project utilizes [PeekingDuck](https://github.com/aimakerspace/PeekingDuck) 
 - [ ] Integration of Python Scripts / Peekingduck CLI with Web Application
 
 ### Front-End Web Application
-- [ ] Design Wireframe for Front-End
+- [x] Design Wireframe for Front-End
     - Display current footfall
     - Display past statistics
     - Display camera location
