@@ -9,8 +9,8 @@ app.use(cors());
 app.use(express.json()); //parse appilcation/json data
 app.use(express.urlencoded({ extended: false }));
 
-// Get all past analytics of Footfall
-app.get("/history/", (req, res) => {
+// Get past analytics of Footfall within certain time frame
+app.get("/history/:location/:pastTime", (req, res) => {
     Footfall.getAllFootfalls((err, footfalls) => {
         if (err) {
             console.log(err);
@@ -20,8 +20,13 @@ app.get("/history/", (req, res) => {
     });
 });
 
-// Get latest Footfall analytics
-app.get("/latest/", (req, res) => {
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
+
+// Get latest Footfall analytics (last record in db)
+app.get("/latest/:location", (req, res) => {
     Footfall.getLatestFootfall((err, footfall) => {
         if (err) {
             console.log(err);
@@ -31,19 +36,19 @@ app.get("/latest/", (req, res) => {
     });
 });
 
-// Get Footfall of a particular date
-app.get("/history/:date", (req, res) => {
-    Footfall.getFootfallByDate(req.params.date, (err, footfall) => {
-        if (err) {
-            console.log(err);
-            res.status(500).send();
-        }
-        res.status(200).send(footfall);
-    });
-});
+// // Get Footfall of a particular date
+// app.get("/history/:date", (req, res) => {
+//     Footfall.getFootfallByDate(req.params.date, (err, footfall) => {
+//         if (err) {
+//             console.log(err);
+//             res.status(500).send();
+//         }
+//         res.status(200).send(footfall);
+//     });
+// });
 
-// Insert Footfall of a particular date and time
-app.post("/history/:date/:time", (req, res) => {
+// Insert Footfall of a particular timestamp and location
+app.post("/history/:timetsamp/:location", (req, res) => {
     Footfall.insertFootfall(req, (err, footfall) => {
         if (err) {
             console.log(err);
@@ -53,8 +58,8 @@ app.post("/history/:date/:time", (req, res) => {
     });
 });
 
-// Update Footfall of a particular date and time
-app.put("/history/:date/:time", (req, res) => {
+// Update Footfall of a particular timestamp and location
+app.put("/history/:timestamp/:location", (req, res) => {
     Footfall.updateFootfall(req, (err, footfall) => {
         if (err) {
             console.log(err);
@@ -65,7 +70,7 @@ app.put("/history/:date/:time", (req, res) => {
 });
 
 // Delete Footfall of a particular date and time
-app.delete("/history/:date/:time", (req, res) => {
+app.delete("/history/:timestamp/:location", (req, res) => {
     Footfall.deleteFootfall(req.params.date, req.params.time, (err, footfall) => {
         if (err) {
             console.log(err);
