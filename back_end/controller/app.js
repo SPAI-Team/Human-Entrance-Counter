@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-const Footfall = require('../models/footfall');
+const Footfall = require('../models/footfall.js');
 const fs = require("fs");
 var cors = require('cors');
 
@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Get past analytics of Footfall within certain time frame
 app.get("/history/:location/:pastTime", (req, res) => {
-    Footfall.getAllFootfalls((err, footfalls) => {
+    Footfall.getAllFootfall(req.params.location, req.params.pastTime, (err, footfalls) => {
         if (err) {
             console.log(err);
             res.status(500).send();
@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 
 // Get latest Footfall analytics (last record in db)
 app.get("/latest/:location", (req, res) => {
-    Footfall.getLatestFootfall((err, footfall) => {
+    Footfall.getLatestFootfall(req.params.location, (err, footfall) => {
         if (err) {
             console.log(err);
             res.status(500).send();
@@ -38,7 +38,7 @@ app.get("/latest/:location", (req, res) => {
 
 // // Get Footfall of a particular date
 // app.get("/history/:date", (req, res) => {
-//     Footfall.getFootfallByDate(req.params.date, (err, footfall) => {
+//     Footfall.getFootfallByTimestamp(req.params.date, (err, footfall) => {
 //         if (err) {
 //             console.log(err);
 //             res.status(500).send();
@@ -48,7 +48,7 @@ app.get("/latest/:location", (req, res) => {
 // });
 
 // Insert Footfall of a particular timestamp and location
-app.post("/history/:timetsamp/:location", (req, res) => {
+app.post("/history", (req, res) => {
     Footfall.insertFootfall(req, (err, footfall) => {
         if (err) {
             console.log(err);
@@ -59,7 +59,7 @@ app.post("/history/:timetsamp/:location", (req, res) => {
 });
 
 // Update Footfall of a particular timestamp and location
-app.put("/history/:timestamp/:location", (req, res) => {
+app.put("/history", (req, res) => {
     Footfall.updateFootfall(req, (err, footfall) => {
         if (err) {
             console.log(err);
@@ -71,7 +71,7 @@ app.put("/history/:timestamp/:location", (req, res) => {
 
 // Delete Footfall of a particular date and time
 app.delete("/history/:timestamp/:location", (req, res) => {
-    Footfall.deleteFootfall(req.params.date, req.params.time, (err, footfall) => {
+    Footfall.deleteFootfall(req.params.timestamp, req.params.location, (err, footfall) => {
         if (err) {
             console.log(err);
             res.status(500).send();
