@@ -63,4 +63,10 @@ class Node(AbstractNode):
         #   e.g. OrderedDict([(0, array([205, 291]))])
         trackers = self.ct.update(bboxes) 
         
-        return {'trackers': trackers}
+        tracker = {} 
+        for i in trackers.keys():
+            tracker[i] = {
+                'coordinate': trackers[i],
+        }
+
+        return {'trackers': tracker}
