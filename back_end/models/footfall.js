@@ -1,8 +1,18 @@
 let db = require('./databaseConfig.js');
+const client = require('../config.js');
 
 const footfall = {
-    getAllFootfall: function (callback) {
-        return db.query("SELECT * FROM footfall where timestamp = ? and location = ?", [timestamp, location], callback);
+    getFootfall: function (callback) {
+        client.connect();
+        client.query('SELECT * FROM footfall where timestamp = $1 and location = $2', [timestamp, location], (err, res) => {
+            if (err) {
+                callback(err, null);
+            }
+            else {
+                callback(null, res.rows);
+            }
+            client.end();
+          });
     },
     getLatestFootfall: function (callback) {
         return db.query("SELECT * FROM footfall where location = ? ORDER BY footfall_id DESC LIMIT 1", [location], callback);

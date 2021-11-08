@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Get past analytics of Footfall within certain time frame
 app.get("/history/:location/:pastTime", (req, res) => {
-    Footfall.getAllFootfall(req.params.location, req.params.pastTime, (err, footfalls) => {
+    Footfall.getFootfall(req.params.location, req.params.pastTime, (err, footfalls) => {
         if (err) {
             console.log(err);
             res.status(500).send();
