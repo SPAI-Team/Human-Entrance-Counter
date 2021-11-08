@@ -2,7 +2,7 @@ let db = require('./databaseConfig.js');
 const client = require('../config.js');
 
 const footfall = {
-    getFootfall: function (callback) {
+    getFootfall: function (location, timestamp, callback) {
         client.connect();
         client.query('SELECT * FROM footfall where timestamp = $1 and location = $2', [timestamp, location], (err, res) => {
             if (err) {
