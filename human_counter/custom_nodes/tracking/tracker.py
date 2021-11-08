@@ -62,11 +62,4 @@ class Node(AbstractNode):
         # Centroid coordinates as value
         #   e.g. OrderedDict([(0, array([205, 291]))])
         trackers = self.ct.update(bboxes) 
-        
-        tracker = {} 
-        for i in trackers.keys():
-            tracker[i] = {
-                'coordinate': trackers[i],
-        }
-
-        return {'trackers': tracker}
+        return {'trackers': trackers}
