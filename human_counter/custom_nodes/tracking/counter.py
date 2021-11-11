@@ -1,7 +1,6 @@
 from typing import Any, Dict, List
 from peekingduck.pipeline.nodes.node import AbstractNode
 
-
 class Node(AbstractNode):
     '''
     Track coordinate of centroid and update the net-footfall of a particular interval.
