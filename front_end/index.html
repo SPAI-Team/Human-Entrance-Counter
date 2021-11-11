@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="description" content="Orbitor,business,company,agency,modern,bootstrap4,tech,software">
+  <meta name="author" content="themefisher.com">
+
+  <title>SPAI- Human Counter</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+
+  <!-- bootstrap.min css -->
+  <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+  <!-- Icon Font Css -->
+  <link rel="stylesheet" href="plugins/icofont/icofont.min.css">
+  <!-- Slick Slider  CSS -->
+  <link rel="stylesheet" href="plugins/slick-carousel/slick/slick.css">
+  <link rel="stylesheet" href="plugins/slick-carousel/slick/slick-theme.css">
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <!-- Main Stylesheet -->
+  
+
+</head>
+
+<body id="top">
+
+<header>
+	<div class="header-top-bar">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="logo-row">
+					<img src="images/SPAI-logo.png" alt="SPAI" class="logo center">
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
+</header>
+	
+
+
+
+<!-- Slider Start -->
+<section class="banner">
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-12 col-xl-7">
+				<div class="block">
+					<div class="divider mb-3"></div>
+					<span class="text-uppercase text-sm letter-spacing text-white font-weight-bold">anything to write ?</span>
+					<h1 class="spaiheader mb-3 mt-3" id="spaiheader">SPAI Human Counter</h1>
+					
+					<div class="select">
+						<select name="format" id="format">
+						   <option selected disabled>Select a Location</option>
+						   <option value="fc1">Food Court 1</option>
+						   <option value="fc2">Food Court 2</option>
+						   <option value="fc3">Food Court 3</option>
+						   <option value="fc4">Food Court 4</option>
+						   <option value="fc5">Food Court 5</option>
+
+						</select>
+					 </div>	
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="features">
+	<div class="container">
+
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="feature-block d-lg-flex">
+
+					<div class="feature-item mb-5 mb-lg-0">
+						<div class="feature-icon mb-4">
+							<i class="icofont-foot-print"></i>
+						</div>
+						<span>Count</span>
+						<h4 class="mb-3">Current number of visitors</h4>
+						<p class="mb-4">-Display current number of visitors-</p>
+						<a href="#history" class="btn btn-main btn-round-full">View Past Statistics</a>
+					</div>
+				
+					<div class="feature-item mb-5 mb-lg-0">
+						<div class="feature-icon mb-4">
+							<i class="icofont-lunch"></i>
+						</div>
+						<span>brief description of how this is calculated?</span>
+						<h4 class="mb-5">Current crowd level</h4>
+						<p class="mb-4">-Display current crowd level-</p>
+						<ul class="w-hours list-unstyled">
+		                    
+		                    <li class="d-flex justify-content-between">Num of seats available : <span>xxx</span></li>
+		                    <li class="d-flex justify-content-between">Recommend to go :<span>yes/no?</span></li>
+		                </ul>
+					</div>
+				
+					<div class="feature-item mb-5 mb-lg-0">
+						<div class="feature-icon mb-4">
+							<i class="icofont-gears"></i>
+						</div>
+						<span>To be confirmed</span>
+						<h4 class="mb-3">To be confirmed</h4>
+						<p></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row" id="divGraph"></div>
+	</div>
+</section>
+
+<section>
+	<div class="container mb-5 mt-5" id="history">
+		<h1 class="mb-3 mt-3" id="graph">Graph here</h1>
+	</div>
+</section>
+
+
+<!-- footer Start -->
+<footer class="footer section gray-bg">
+	
+
+</footer>
+
+   
+
+    <!-- 
+    Essential Scripts
+    =====================================-->
+
+    <link rel=”stylesheet” href=”https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css”>
+
+	<script src=”https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js”></script>
+    <!-- Main jQuery -->
+    <script src="plugins/jquery/jquery.js"></script>
+    <!-- Bootstrap 4.3.2 -->
+    <script src="plugins/bootstrap/js/popper.js"></script>
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="plugins/counterup/jquery.easing.js"></script>
+	<script src="js/script.js"></script>
+
+
+    
+	<link rel="stylesheet" href="css/style.css">
+	
+	<script>
+	// $(document).ready(function(){
+		// 	$.ajax({
+		// 		url: "queries.php",
+		// 		type: "post",
+		// 		data: {
+		// 			foodcourt: "Food Court 1"
+		// 		},
+		// 		success: function(heat_map) {
+		// 			$("#divGraph").html(heat_map);
+		// 			$("#graph").chart = new Chart($("#graph"), $("#graph").data("settings"));
+		// 		}
+		// 	});
+
+		// 	$("#setFoodcourt").change(function(){
+		// 		$.ajax({
+		// 		url: "queries.php",
+		// 		type: "post",
+		// 		data: {
+		// 			foodcourt: $(this).val()
+		// 		},
+		// 		success: function(heat_map) {
+		// 			$("#divGraph").html(heat_map);
+		// 			$("#graph").chart = new Chart($("#graph"), $("#graph").data("settings"));
+		// 		}
+		// 	});
+		// 	})
+		// });
+			
+	</script>
+  </body>
+  </html>
+   
