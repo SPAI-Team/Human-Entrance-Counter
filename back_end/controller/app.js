@@ -10,8 +10,8 @@ app.use(express.json()); //parse appilcation/json data
 app.use(express.urlencoded({ extended: false }));
 
 // Get past analytics of Footfall within certain time frame
-app.get("/history/:location/:pastTime", (req, res) => {
-    Footfall.getFootfall(req.params.location, req.params.pastTime, (err, footfalls) => {
+app.get("/history/:location/:startTime/:endTime", (req, res) => {
+    Footfall.getFootfallInTimeframe(req.params.location, req.params.startTime, req.params.endTime, (err, footfalls) => {
         if (err) {
             console.log(err);
             res.status(500).send();
@@ -19,11 +19,6 @@ app.get("/history/:location/:pastTime", (req, res) => {
         res.status(200).send(footfalls);
     });
 });
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
-
 
 // Get latest Footfall analytics (last record in db)
 app.get("/latest/:location", (req, res) => {
@@ -49,7 +44,16 @@ app.get("/latest/:location", (req, res) => {
 
 // Insert Footfall of a particular timestamp and location
 app.post("/history", (req, res) => {
-    Footfall.insertFootfall(req, (err, footfall) => {
+    let netFootfall = req.body.NetFootfall
+    Footfall.getLatestFootfall(req.body.location, (err, footfall) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send();
+        }
+        netFootfall += footfall.CurrentFootfall;
+    });
+
+    Footfall.insertFootfall(req.body, netFootfall, (err, footfall) => {
         if (err) {
             console.log(err);
             res.status(500).send();
@@ -58,26 +62,5 @@ app.post("/history", (req, res) => {
     });
 });
 
-// Update Footfall of a particular timestamp and location
-app.put("/history", (req, res) => {
-    Footfall.updateFootfall(req, (err, footfall) => {
-        if (err) {
-            console.log(err);
-            res.status(500).send();
-        }
-        res.status(200).send(footfall);
-    });
-});
-
-// Delete Footfall of a particular date and time
-app.delete("/history/:timestamp/:location", (req, res) => {
-    Footfall.deleteFootfall(req.params.timestamp, req.params.location, (err, footfall) => {
-        if (err) {
-            console.log(err);
-            res.status(500).send();
-        }
-        res.status(200).send(footfall);
-    });
-});
 
 module.exports = app;
