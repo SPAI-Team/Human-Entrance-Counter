@@ -13,7 +13,7 @@ const footfall = {
         });
     },
     getFootfallInTimeframe: async function (location, startTime, endTime, callback) {
-        pool.query("SELECT * FROM footfall where location = $1 and (time BETWEEN $2::timestamp and $3::timestamp);", [location, startTime, endTime], (err, res) => {
+        pool.query("SELECT * FROM footfall where location = $1 and (time BETWEEN $2 and $3);", [location, startTime, endTime], (err, res) => {
             if (err) {
                 return callback(err, null);
             }

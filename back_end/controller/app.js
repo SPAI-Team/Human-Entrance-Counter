@@ -57,24 +57,26 @@ app.get("/latest/:location", (req, res) => {
 
 // Insert Footfall of a particular timestamp and location
 app.post("/history", (req, res) => {
-    let netFootfall = req.body.NetFootfall
+    let netFootfall = parseInt(req.body.netfootfall)
     Footfall.getLatestFootfall(req.body.location, (err, footfall) => {
         if (err) {
             console.log(err);
             res.status(500).send();
         }
-        if(footfall.length > 0){
-            netFootfall += footfall.currentFootfall;
+        if(footfall.length != 0){
+            netFootfall += footfall[0].currentfootfall;
         }
-    });
 
-    Footfall.insertFootfall(req.body, netFootfall, (err, footfall) => {
-        if (err) {
-            console.log(err);
-            res.status(500).send();
-        }
-        res.status(200).send(footfall);
+        Footfall.insertFootfall(req.body, netFootfall, (err, footfall) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send();
+            }
+            res.status(200).send(footfall);
+        });
+        
     });
+    
 });
 
 
