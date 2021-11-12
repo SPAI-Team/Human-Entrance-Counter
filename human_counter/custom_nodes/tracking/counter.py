@@ -45,7 +45,7 @@ class Node(AbstractNode):
         Returns:
             outputs (dict): dict with keys "footfall", 'tracker' 
         '''
-        width, height, _ = inputs['img'].shape
+        height, width, _ = inputs['img'].shape
 
         for centroidId, coordinates in inputs["trackers"].items():
             pastIsIn = self.pos_hist.get(centroidId, None) # Get past position history if exist
