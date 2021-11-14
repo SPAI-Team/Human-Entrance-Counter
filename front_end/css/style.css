@@ -26,6 +26,10 @@ html {
   margin-right: auto;
   width: 75%;
 }
+#description {
+  text-shadow: 3px 3px #2d3142;
+  font-size:  18px;
+}
 
 #spaiheader {
   color: #bf3100;
@@ -484,9 +488,12 @@ a:focus {
 .banner {
   position: relative;
   overflow: hidden;
+  /* overflow: hidden; */
   background: #fff;
   background: url("../images/bg2.jpg") no-repeat;
   background-size: cover;
+  max-width: 100%; 
+  height: auto;
   min-height: 550px;
 }
 
@@ -1558,4 +1565,8 @@ select::-ms-expand {
 }
 .select:hover::after {
   color: #23b499;
+}
+
+#CurrentFootfall {
+  font: normal 11px "Helvetica Neue", Helvetica, sans-serif;
 }
