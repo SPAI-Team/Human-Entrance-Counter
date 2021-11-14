@@ -52,7 +52,7 @@ app.post("/history", (req, res) => {
             res.status(500).send();
         }
         if(footfall){
-            netFootfall += footfall[0].currentfootfall;
+            netFootfall += footfall.currentfootfall;
         }
 
         Footfall.insertFootfall(req.body, netFootfall, (err, footfall) => {
