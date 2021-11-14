@@ -14,7 +14,12 @@ const corsOptions = {
     }
   }
 }
-app.use(cors(corsOptions));
+// To enable whitelisting
+//app.use(cors(corsOptions));
+
+// Everyone able to access the API
+app.use(cors());
+
 app.use(express.json()); //parse appilcation/json data
 app.use(express.urlencoded({ extended: false }));
 
