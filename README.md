@@ -54,3 +54,63 @@ The project utilizes [PeekingDuck](https://github.com/aimakerspace/PeekingDuck) 
     conda activate human-entrance
     pip install peekingduck
     ```
+
+## Formatting for backend
+
+column		format              data type		example
+time		YYYYMMDDhhmmss      string			20211114102300
+footfall 	int	                integer			1
+location 	locationname		string			fc3
+
+## backend queries
+
+get /history/:location/:startTime/:endTime
+- input: locationname(string), startTime(string in YYYYMMDDhhmmss), endTime(string in YYYYMMDDhhmmss)
+- output: json array of records
+- each record: footfallid (int), time (string in YYYYMMDDhhmmss), cuurentfootfall (int), location (string), netfootfall (int)
+* note: currentfootfall = total footfall(all added together), netfootfall = footfall recorded at time of record
+example:
+get /history/fc1/20211111024000/20211114130000
+output:
+[
+    {
+        "footfallid": 34,
+        "time": "20211114101000",
+        "currentfootfall": 20,
+        "location": "fc1",
+        "netfootfall": 20
+    },
+    {
+        "footfallid": 35,
+        "time": "20211114111000",
+        "currentfootfall": 40,
+        "location": "fc1",
+        "netfootfall": 20
+    }
+]
+
+
+get /latest/:location
+- input: locationname (string)
+- output: json object with 1 record
+- record has: footfallid (int), time (string in YYYYMMDDhhmmss), cuurentfootfall (int), location (string)
+example:
+get /latest/fc6
+output:
+{
+    "footfallid": 33,
+    "time": "20211111024500",
+    "currentfootfall": 0,
+    "location": "fc6"
+}
+
+post /history
+- input: locationname(string), startTime(string in YYYYMMDDhhmmss), netfootfall (int)
+- output: empty array []
+post /history
+_body_
+time:20211114121500
+netfootfall:30
+location:fc1
+
+output: []
