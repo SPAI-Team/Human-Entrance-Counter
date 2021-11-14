@@ -51,7 +51,7 @@ app.post("/history", (req, res) => {
             console.log(err);
             res.status(500).send();
         }
-        if(footfall.length != 0){
+        if(footfall){
             netFootfall += footfall[0].currentfootfall;
         }
 
