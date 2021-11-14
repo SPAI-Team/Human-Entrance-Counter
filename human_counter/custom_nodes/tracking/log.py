@@ -35,7 +35,6 @@ class Node(AbstractNode):
         super().__init__(config, node_path=__name__, **kwargs)
          
     def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-
         current_footfall = inputs["footfall"]
         current_time = datetime.now().strftime("%H:%M:%S")
         

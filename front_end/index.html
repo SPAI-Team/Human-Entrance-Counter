@@ -167,6 +167,12 @@
 
 	<link rel="stylesheet" href="css/style.css">
 	<script>
+		$.get(
+		    "https://spai-human-counter-backend-api.herokuapp.com/latest/fc6",
+		    function(data) {
+		       alert('page content: ' + data);
+		    }
+		);
 		var options = {
 			series: [{
 				name: '8am',
