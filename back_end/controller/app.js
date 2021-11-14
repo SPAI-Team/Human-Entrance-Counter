@@ -9,19 +9,6 @@ app.use(cors());
 app.use(express.json()); //parse appilcation/json data
 app.use(express.urlencoded({ extended: false }));
 
-
-// Testing get function (will get all records in db)
-app.get("/", (req, res) => {
-    Footfall.getAll((err, footfalls) => {
-        if (err) {
-            console.log(err);
-            res.status(500).send();
-        }
-        res.status(200).send(footfalls);
-    });
-});
-
-
 // Get past analytics of Footfall within certain time frame
 app.get("/history/:location/:startTime/:endTime", (req, res) => {
     Footfall.getFootfallInTimeframe(req.params.location, req.params.startTime, req.params.endTime, (err, footfalls) => {
