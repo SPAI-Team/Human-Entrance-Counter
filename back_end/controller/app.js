@@ -4,9 +4,17 @@ const Footfall = require('../models/footfall.js');
 const fs = require("fs");
 const path = require('path')
 var cors = require('cors');
-
-app.options('*', cors());
-app.use(cors());
+const whitelist = ['https://spai-human-counter.herokuapp.com', 'https://spai-human-counter-backend-api.herokuapp.com']
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error())
+    }
+  }
+}
+app.use(cors(corsOptions));
 app.use(express.json()); //parse appilcation/json data
 app.use(express.urlencoded({ extended: false }));
 
