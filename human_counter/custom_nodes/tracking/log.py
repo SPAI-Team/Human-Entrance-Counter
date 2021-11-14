@@ -5,6 +5,7 @@
 #check if request is posted
 #if posted, update the timings and footfall value
 #if not then print error
+#amir:
 import requests
 from datetime import datetime
 from typing import Optional, Dict, Any
@@ -65,7 +66,7 @@ class Node(AbstractNode):
 API_ENDPOINT = "https://spai-human-counter.herokuapp.com/"
   
 # your API key here
-API_KEY = "XXXXXXXXXXXXXXXXX"
+API_KEY = ""
   
 # your source code here
 source_code = '''
@@ -83,7 +84,7 @@ data = {'api_dev_key':API_KEY,
 
 # sending post request and saving response as response object
 postrequest = requests.post(url = API_ENDPOINT, data = data)
-  
+
 # extracting response text 
 endpoint_url = postrequest.text
 print("The endpoint_url URL is:%s"%endpoint_url) 
@@ -116,3 +117,4 @@ try:
   r.raise_for_status()
 except requests.exceptions.HTTPError as e:
    print(e.response.text)
+
