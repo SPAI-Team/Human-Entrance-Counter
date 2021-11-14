@@ -67,7 +67,4 @@ app.post("/history", (req, res) => {
     
 });
 
-// Serve static files from the frontend app
-app.use(express.static(path.join(__dirname, '../../front_end')))
-
 module.exports = app;
