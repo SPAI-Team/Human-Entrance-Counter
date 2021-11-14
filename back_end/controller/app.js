@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 const Footfall = require('../models/footfall.js');
 const fs = require("fs");
+const path = require('path')
 var cors = require('cors');
 
 app.options('*', cors());
@@ -66,5 +67,7 @@ app.post("/history", (req, res) => {
     
 });
 
+// Serve static files from the frontend app
+app.use(express.static(path.join(__dirname, '../../front_end')))
 
 module.exports = app;
