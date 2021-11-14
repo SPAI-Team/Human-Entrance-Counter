@@ -2,16 +2,6 @@ let db = require('./databaseConfig.js');
 const pool = require('../config.js');
 
 const footfall = {
-    getAll: function (callback) {
-        pool.query('SELECT * FROM footfall', (err, res) => {
-            if (err) {
-                return callback(err, null);
-            }
-            else {
-                return callback(null, res.rows);
-            }
-        });
-    },
     getFootfallInTimeframe: async function (location, startTime, endTime, callback) {
         pool.query("SELECT * FROM footfall where location = $1 and (time BETWEEN $2 and $3);", [location, startTime, endTime], (err, res) => {
             if (err) {
