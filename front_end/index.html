@@ -14,8 +14,10 @@
   <!-- Icon Font Css -->
   <link rel="stylesheet" href="plugins/icofont/icofont.min.css">
   <script src="/node_modules/chart.heatmap.js/Chart.HeatMap.js"></script>
+  <!-- Ajax axios -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.26.3/apexcharts.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <!-- Slick Slider  CSS -->
   <link rel="stylesheet" href="plugins/slick-carousel/slick/slick.css">
   <link rel="stylesheet" href="plugins/slick-carousel/slick/slick-theme.css">
@@ -340,50 +342,15 @@
 		  height: 450,
 		  type: 'heatmap',
 		},
-		plotOptions: {
-          heatmap: {
-            shadeIntensity: 0.5,
-            radius: 0,
-            useFillColorAsStroke: true,
-            colorScale: {
-              ranges: [{
-                  from: 0,
-                  to: 5,
-                  name: 'low',
-                  color: '#caf0f8'
-                },
-                {
-                  from: 6,
-                  to: 10,
-                  name: 'medium',
-                  color: '#128FD9'
-                },
-                {
-                  from: 11,
-                  to: 15,
-                  name: 'high',
-                  color: '#03045e'
-                },
-                {
-                  from: 16,
-                  to: 20,
-                  name: 'extreme',
-                  color: '#a4161a'
-                }
-              ]
-            }
-          }
-        },
         dataLabels: {
           enabled: false
         },
-        stroke: {
-          width: 1
-        },
+        colors: ["#14213d"],
         title: {
-          text: 'History Statistics'
+          text: 'Past Statistics'
         },
         };
+
 
 		var chart = new ApexCharts(document.getElementById('chart'), options);
 		chart.render();
