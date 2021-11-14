@@ -1,81 +1,119 @@
-import datetime.datetime
+#pratik:
+#the commenting for the code
+#the conversion of the datetime
+#amir: 
+#check if request is posted
+#if posted, update the timings and footfall value
+#if not then print error
 import requests
-import time
-import os
-import sys
-import logging
-import traceback
-from typing import Optional, Dict
+from datetime import datetime
+from typing import Optional, Dict, Any
+from peekingduck.pipeline.nodes.node import AbstractNode
 
-from colorama import init, Fore, Style
-
-
-class LoggerSetup:  # pylint: disable=too-few-public-methods
-    """Set up the universal logging configuration"""
-
-    def __init__(self) -> None:
-        if os.name == "nt":
-            init()
-
-        formatter = ColoredFormatter(
-            "{asctime} {name} {level_color} {levelname}"
-            "{reset}: {msg_color} {message} {reset}",
-            style="{",
-            datefmt="%Y-%m-%d %H:%M:%S",
-            colors={
-                "DEBUG": Fore.RESET + Style.BRIGHT,
-                "INFO": Fore.RESET + Style.BRIGHT,
-                "WARNING": Fore.YELLOW + Style.BRIGHT,
-                "ERROR": Fore.RED + Style.BRIGHT,
-                "CRITICAL": Fore.RED + Style.BRIGHT,
-            },
-        )
-
-        handler = logging.StreamHandler(sys.stdout)
-        handler.setFormatter(formatter)
-
-        self.logger = logging.getLogger()
-        self.logger.handlers[:] = []
-        self.logger.addHandler(handler)
-        self.logger.setLevel(logging.INFO)
-        sys.excepthook = self.handle_exception
-
-    def handle_exception(  # type:ignore
-        self, exc_type, exc_value, exc_traceback
-    ) -> None:
-        """Use Python's logging module when showing errors"""
-
-        if issubclass(exc_type, KeyboardInterrupt):
-            sys.__excepthook__(exc_type, exc_value, exc_traceback)
-            return
-
-        error_list = traceback.format_exception(exc_type, exc_value, exc_traceback)
-        traceback_msg = " ".join([str(elem) for elem in error_list[:-1]])
-        error_msg = str(error_list[-1])
-
-        # Make the error type more obvious in terminal by separating these
-        self.logger.error(traceback_msg)
-        self.logger.error(error_msg)
+class Node(AbstractNode):
+    """<WHAT THIS NODE DOES>"""
+    '''This node checks the current coordinate of centroid and the past box location.
+        Args:
+            inputs (dict): dict with key "trackers"
+        Returns:
+            outputs (dict): dict with keys "footfall", 'tracker'
+      '''
 
 
-class ColoredFormatter(logging.Formatter):
-    """This class formats the color of logging messages"""
+    def __init__(self, postIntervalTiming:int="5", endpoint:str="", config: Dict[str, Any] = None, **kwargs: Any) -> Dict[str, Any]:
+        self.__name__ = ''
 
-    def __init__(
-        self, *args: str, colors: Optional[Dict[str, str]] = None, **kwargs: str
-    ) -> None:
-        """Initialize the formatter with specified format strings"""
+        self.endpoint = endpoint
+        self.postIntervalTiming = postIntervalTiming #>> NEED TO DO Type Casting FROM STRING TO DATETIME FOR COMPARISON PURPOSE
+        self.pastPostTiming = datetime.now()
 
-        super().__init__(*args, **kwargs)
+        if config is None:
+            config = {
+                "input": ["footfall"],
+                "output": ["footfall"]
+            }
+        super().__init__(config, node_path=__name__, **kwargs)
+         
+    def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
 
-        self.colors = colors if colors else {}
+        current_footfall = inputs["footfall"]
+        current_time = datetime.now().strftime("%H:%M:%S")
+        
+        if current_time >= (self.pastPostTiming + self.pastPostTiming):
+            response = requests.post(
+                self.endpoint, 
+                data={
+                    "footfall": inputs['footfall']
+                }
+            )
+            ###### Check if the request has been posted successfully
+            ###### if request posted, 
+            ###### >> update the pastPostTiming
+            ###### >> update the footfall value ( current_footfall = 0)
 
-    def format(self, record: logging.LogRecord) -> str:
-        """Format the specified record as text."""
+            ###### if not posted, print out error message
+            
+            pastPostTiming = self.postIntervalTiming + current_time
 
-        record.level_color = self.colors.get(record.levelname, "")
-        record.reset = Style.RESET_ALL
-        record.msg_color = self.colors.get(record.levelname, "")
+        return {"footfall": current_footfall}
+# End of class Node
 
-        return super().format(record)
+# POST request to the endpoint        
 
+
+
+# defining the api-endpoint 
+API_ENDPOINT = "https://spai-human-counter.herokuapp.com/"
+  
+# your API key here
+API_KEY = "XXXXXXXXXXXXXXXXX"
+  
+# your source code here
+source_code = '''
+print("Hello, world!")
+a = 1
+b = 2
+print(a + b)
+'''
+  
+# data to be sent to api
+data = {'api_dev_key':API_KEY,
+        'api_option':'paste',
+        'api_paste_code':source_code,
+        'api_paste_format':'python'}
+
+# sending post request and saving response as response object
+postrequest = requests.post(url = API_ENDPOINT, data = data)
+  
+# extracting response text 
+endpoint_url = postrequest.text
+print("The endpoint_url URL is:%s"%endpoint_url) 
+
+#error handling
+#GET request to the endpoint
+try:
+  r = requests.get('https://spai-human-counter.herokuapp.com/')
+  r.raise_for_status()
+except requests.exceptions.HTTPError as err:
+   raise SystemExit(err)
+#try:
+#  response = requests.post(_url, files = {
+#    'file': some_file
+#   })
+#       response.raise_for_status()
+#       except requests.exceptions.HTTPError as errh:
+#          return "An Http Error occurred:" + repr(errh)
+#        except requests.exceptions.ConnectionError as errc:
+#          return "An Error Connecting to the API occurred:" + repr(errc)
+#        except requests.exceptions.Timeout as errt:
+#          return "A Timeout Error occurred:" + repr(errt)
+#       except requests.exceptions.RequestException as err:
+#          return "An Unknown Error occurred" + repr(err)
+#POST request to the endpoint
+try:
+  r = requests.post('somerestapi.com/post-here', data = {
+   'birthday': '9/9/3999'
+})
+  r.raise_for_status()
+except requests.exceptions.HTTPError as e:
+   print(e.response.text)
