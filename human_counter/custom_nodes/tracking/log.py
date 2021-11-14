@@ -16,7 +16,7 @@ class Node(AbstractNode):
         if config is None:
             config = {
                 "input": ["footfall"],
-                "output": ["footfall"]7/ 
+                "output": ["footfall"]
             }
         super().__init__(config, node_path=__name__, **kwargs)
          
