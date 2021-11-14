@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+
+<html lang="zxx">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <title>SPAI- Human Counter</title>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+
+  <!-- bootstrap.min css -->
+  <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+  <!-- Icon Font Css -->
+  <link rel="stylesheet" href="plugins/icofont/icofont.min.css">
+  <script src="/node_modules/chart.heatmap.js/Chart.HeatMap.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.26.3/apexcharts.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- Slick Slider  CSS -->
+  <link rel="stylesheet" href="plugins/slick-carousel/slick/slick.css">
+  <link rel="stylesheet" href="plugins/slick-carousel/slick/slick-theme.css">
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <!-- Main Stylesheet -->
+  
+
+</head>
+
+<body id="top">
+
+<header>
+	<div class="header-top-bar">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="logo-row">
+					<img src="images/SPAI-logo.png" alt="SPAI" class="logo center">
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
+</header>
+	
+
+
+
+<!-- Slider Start -->
+<section class="banner">
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-12 col-xl-7">
+				<div class="block">
+					<div class="divider mb-3"></div>
+					<span id="description" class="text-uppercase text-sm letter-spacing text-white font-weight-bold">Detect the amount of human traffic moving in and out of a bounded region at any given time.</span>
+					<h1 class="spaiheader mb-3 mt-3" id="spaiheader">SPAI Human Counter</h1>
+					
+					<div class="select">
+						<select name="format" id="format">
+						   <option selected disabled>Select a Location</option>
+						   <option value="fc1">Food Court 1</option>
+						   <option value="fc2">Food Court 2</option>
+						   <option value="fc3">Food Court 3</option>
+						   <option value="fc4">Food Court 4</option>
+						   <option value="fc5">Food Court 5</option>
+
+						</select>
+					 </div>	
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="features">
+	<div class="container">
+
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="feature-block d-lg-flex">
+
+					<div class="feature-item mb-5 mb-lg-0">
+						<div class="feature-icon mb-4">
+							<i class="icofont-foot-print"></i>
+						</div>
+						<span>Count</span>
+						<h4 class="mb-3">Current number of visitors</h4>
+						<div id="CurrentFootfall" class="col p-4 mb-4" >				
+							<h2>38</h2>
+						</div>
+						<a href="#history" class="btn btn-main btn-round-full">View Past Statistics</a>
+					</div>
+				
+					<div class="feature-item mb-5 mb-lg-0">
+						<div class="feature-icon mb-4">
+							<i class="icofont-lunch"></i>
+						</div>
+						<span>brief description of how this is calculated?</span>
+						<h4 class="mb-5">Current crowd level</h4>
+						<p class="mb-4">-Display current crowd level-</p>
+						<ul class="w-hours list-unstyled">
+		                    
+		                    <li class="d-flex justify-content-between">Num of seats available : <span>xxx</span></li>
+		                    <li class="d-flex justify-content-between">Recommend to go :<span>yes/no?</span></li>
+		                </ul>
+					</div>
+				
+					<div class="feature-item mb-5 mb-lg-0">
+						<div class="feature-icon mb-4">
+							<i class="icofont-gears"></i>
+						</div>
+						<span>To be confirmed</span>
+						<h4 class="mb-3">To be confirmed</h4>
+						<p></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+</section>
+
+<section>
+	<div class="container mb-5 mt-5" id="history" >
+		<h1 class="mb-3 mt-3" id="graph">Graph here</h1>
+		<div id="chart"></div>
+	</div>
+</section>
+
+
+<!-- footer Start -->
+<footer class="footer section gray-bg">
+	
+
+</footer>
+
+   
+
+    <!-- 
+    Essential Scripts
+    =====================================-->
+
+    <link rel=”stylesheet” href=”https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css”>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src=”https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js”></script>
+    <!-- Main jQuery -->
+    <script src="plugins/jquery/jquery.js"></script>
+    <!-- Bootstrap 4.3.2 -->
+    <script src="plugins/bootstrap/js/popper.js"></script>
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="plugins/counterup/jquery.easing.js"></script>
+	<script src="js/script.js"></script>
+
+
+    
+	<link rel="stylesheet" href="css/style.css">
+	<script>
+		var options = {
+		  series: [{
+		  name: '8am',
+		  data: [
+        [ "2019-11-03", 0],
+        [ "2019-11-05", 7],
+        [ "2019-11-12", 2],
+        [ "2019-11-25", 15],
+        [ "2019-12-01", 3],
+        [ "2019-12-03", 4],
+        [ "2019-12-04", 20],
+        [ "2019-12-08", 5],
+        [ "2019-12-11", 12],
+        [ "2019-12-12", 1],
+        [ "2019-12-17", 15],
+        [ "2019-12-18", 8],
+        [ "2019-12-19", 14],
+        [ "2019-12-20", 20],
+        [ "2019-12-21", 3]
+    ]
+		},
+		{
+		  name: '9am',
+		  data: [
+        [ "2019-11-03", 0],
+        [ "2019-11-05", 6],
+        [ "2019-11-12", 20],
+        [ "2019-11-25", 3],
+        [ "2019-12-01", 13],
+        [ "2019-12-03", 4],
+        [ "2019-12-04", 8],
+        [ "2019-12-08", 20],
+        [ "2019-12-11", 6],
+        [ "2019-12-12", 8],
+        [ "2019-12-17", 3],
+        [ "2019-12-18", 8],
+        [ "2019-12-19", 20],
+        [ "2019-12-20", 15],
+        [ "2019-12-21", 7]
+    ]
+		},
+		{
+		  name: '10am',
+		  data: [
+        [ "2019-11-03", 0],
+        [ "2019-11-05", 15],
+        [ "2019-11-12", 2],
+        [ "2019-11-25", 3],
+        [ "2019-12-01", 7],
+        [ "2019-12-03", 4],
+        [ "2019-12-04", 20],
+        [ "2019-12-08", 6],
+        [ "2019-12-11",15],
+        [ "2019-12-12", 6],
+        [ "2019-12-17", 3],
+        [ "2019-12-18", 17],
+        [ "2019-12-19", 3],
+        [ "2019-12-20", 12],
+        [ "2019-12-21", 8]
+    ]
+		},
+		{
+		  name: '11am',
+		  data: [
+        [ "2019-11-03", 0],
+        [ "2019-11-05", 7],
+        [ "2019-11-12", 2],
+        [ "2019-11-25", 15],
+        [ "2019-12-01", 3],
+        [ "2019-12-03", 4],
+        [ "2019-12-04", 20],
+        [ "2019-12-08", 5],
+        [ "2019-12-11", 12],
+        [ "2019-12-12", 1],
+        [ "2019-12-17", 15],
+        [ "2019-12-18", 12],
+        [ "2019-12-19", 14],
+        [ "2019-12-20", 20],
+        [ "2019-12-21", 3]
+    ]
+		},
+		{
+		  name: '12pm',
+		  data: [
+        [ "2019-11-03", 15],
+        [ "2019-11-05", 8],
+        [ "2019-11-12", 17],
+        [ "2019-11-25", 3],
+        [ "2019-12-01", 20],
+        [ "2019-12-03", 17],
+        [ "2019-12-04", 6],
+        [ "2019-12-08", 12],
+        [ "2019-12-11", 6],
+        [ "2019-12-12", 4],
+        [ "2019-12-17", 17],
+        [ "2019-12-18", 8],
+        [ "2019-12-19", 14],
+        [ "2019-12-20", 3],
+        [ "2019-12-21", 15]
+    ]
+		},
+		{
+		  name: '1pm',
+		  data: [
+        [ "2019-11-03", 0],
+        [ "2019-11-05", 7],
+        [ "2019-11-12", 2],
+        [ "2019-11-25", 15],
+        [ "2019-12-01", 3],
+        [ "2019-12-03", 4],
+        [ "2019-12-04", 20],
+        [ "2019-12-08", 5],
+        [ "2019-12-11", 12],
+        [ "2019-12-12", 1],
+        [ "2019-12-17", 15],
+        [ "2019-12-18", 8],
+        [ "2019-12-19", 14],
+        [ "2019-12-20", 20],
+        [ "2019-12-21", 3]
+    ]
+		},
+		{
+		  name: '2pm',
+		  data: [
+        [ "2019-11-03", 0],
+        [ "2019-11-05", 6],
+        [ "2019-11-12", 20],
+        [ "2019-11-25", 3],
+        [ "2019-12-01", 13],
+        [ "2019-12-03", 4],
+        [ "2019-12-04", 8],
+        [ "2019-12-08", 20],
+        [ "2019-12-11", 6],
+        [ "2019-12-12", 8],
+        [ "2019-12-17", 3],
+        [ "2019-12-18", 17],
+        [ "2019-12-19", 20],
+        [ "2019-12-20", 15],
+        [ "2019-12-21", 7]
+    ]
+		},
+		{
+		  name: '3pm',
+		  data: [
+        [ "2019-11-03", 0],
+        [ "2019-11-05", 17],
+        [ "2019-11-12", 5],
+        [ "2019-11-25",  8],
+        [ "2019-12-01", 3],
+        [ "2019-12-03", 6],
+        [ "2019-12-04", 17],
+        [ "2019-12-08", 6],
+        [ "2019-12-11", 5],
+        [ "2019-12-12", 3],
+        [ "2019-12-17", 9],
+        [ "2019-12-18", 16],
+        [ "2019-12-19", 14],
+        [ "2019-12-20", 3],
+        [ "2019-12-21", 15]
+    ]
+		},
+		{
+		  name: '4pm',
+		  data: [
+        [ "2019-11-03", 0],
+        [ "2019-11-05", 7],
+        [ "2019-11-12", 2],
+        [ "2019-11-25", 15],
+        [ "2019-12-01", 3],
+        [ "2019-12-03", 4],
+        [ "2019-12-04", 20],
+        [ "2019-12-08", 5],
+        [ "2019-12-11", 12],
+        [ "2019-12-12", 1],
+        [ "2019-12-17", 15],
+        [ "2019-12-18", 8],
+        [ "2019-12-19", 14],
+        [ "2019-12-20", 20],
+        [ "2019-12-21", 3]
+    ]
+		}
+		],
+		  chart: {
+		  height: 450,
+		  type: 'heatmap',
+		},
+		plotOptions: {
+          heatmap: {
+            shadeIntensity: 0.5,
+            radius: 0,
+            useFillColorAsStroke: true,
+            colorScale: {
+              ranges: [{
+                  from: 0,
+                  to: 5,
+                  name: 'low',
+                  color: '#caf0f8'
+                },
+                {
+                  from: 6,
+                  to: 10,
+                  name: 'medium',
+                  color: '#128FD9'
+                },
+                {
+                  from: 11,
+                  to: 15,
+                  name: 'high',
+                  color: '#03045e'
+                },
+                {
+                  from: 16,
+                  to: 20,
+                  name: 'extreme',
+                  color: '#a4161a'
+                }
+              ]
+            }
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          width: 1
+        },
+        title: {
+          text: 'History Statistics'
+        },
+        };
+
+		var chart = new ApexCharts(document.getElementById('chart'), options);
+		chart.render();
+	</script>
+	
+	
+	<!-- <script>
+	$(document).ready(function(){
+			$.ajax({
+				url: `http://localhost:8081//history/:location/:startTime/:endTime`,
+				type: "post",
+				data: {
+					foodcourt: "Food Court 1"
+				},
+				success: function(heat_map) {
+					$("#divGraph").html(heat_map);
+					$("#graph").chart = new Chart($("#graph"), $("#graph").data("settings"));
+				}
+			});
+
+			$("#setFoodcourt").change(function(){
+				$.ajax({
+				url: "queries.php",
+				type: "post",
+				data: {
+					foodcourt: $(this).val()
+				},
+				success: function(heat_map) {
+					$("#divGraph").html(heat_map);
+					$("#graph").chart = new Chart($("#graph"), $("#graph").data("settings"));
+				}
+			});
+			})
+		});
+
+
+
+      
+	</script> -->
+	<!-- <script>
+	var data = {
+		labels = ['0h','1h','2h','3h','4h','5h','6h','7h','8h','9h','10h','11h'],
+		datasets = [
+			{
+				label: 'Monday',
+				data: [8, 6, 5, 7, 9, 8, 1, 6, 3, 3, 8, 7]
+			},
+			{
+				label: 'Tuesday',
+				data: [6, 8, 5, 6, 5, 5, 7, 0, 0, 3, 0, 7]
+			},
+			{
+				label: 'Wednesday',
+				data: [8, 5, 6, 4, 2, 2, 3, 0, 2, 0, 10, 8]
+			},
+			{
+				label: 'Thursday',
+				data: [4, 0, 7, 4, 6, 3, 2, 4, 2, 10, 8, 2]
+			},
+			{
+				label: 'Friday',
+				data: [1, 0, 0, 7, 0, 4, 1, 3, 4, 5, 1, 10]
+			}
+		]
+	};
+	
+	var ctx = document.getElementById('heatmap').getContext('2d');
+	var newChart = new Chart(ctx).HeatMap(data);
+	
+	canvas.onclick = function(evt){
+	var activeBox = chart.getBoxAtEvent(evt);
+	console.log(activeBox.value); // value at point
+	console.log(activeBox.label); // x-axis label
+	console.log(activeBox.datasetLabel); // y-axis label
+	};
+	</script> -->
+	<script>
+		$(document).ready(function () {
+			const baseURL = "http://localhost:8081";
+			const publicURL = "http://localhost:8000";
+			
+			// get current link
+			const url = window.location.toString();
+			
+			// extract locatiom from current link
+			const location = parseInt(url.split("/").slice(-1)[0]);
+			
+            // get footfall based on location
+		axios.get(`${baseURL}/latest/${location}`)
+			.then((response) => {
+				const CurrentFootfall = response.data[0];
+
+				// show current footfall
+				const Footfall = `<h2>${CurrentFootfall}</h2>`
+				// append/prepend items
+				$("#CurrentFootfall").append(Footfall)
+
+			})
+			// catch any err
+			.catch((error) => {
+				console.log(error)
+			})
+		});
+	</script>
+
+
+  </body>
+  </html>
+   
