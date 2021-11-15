@@ -104,7 +104,7 @@ class Node(AbstractNode):
             if centroidId not in inputs["trackers"].keys():
                 self.pos_hist.pop(centroidId)
 
-        # Check on whether to send post request if requried
+        # Check on whether to send post request if required
         if self.endpoint is not None:
             self.currentTiming = datetime.now()
             if self.currentTiming >= (self.pastPostTiming + self.postInterval):
