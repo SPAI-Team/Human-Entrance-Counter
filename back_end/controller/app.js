@@ -28,9 +28,9 @@ app.get("/history/:location/:startTime/:endTime", (req, res) => {
     Footfall.getFootfallInTimeframe(req.params.location, req.params.startTime, req.params.endTime, (err, footfalls) => {
         if (err) {
             console.log(err);
-            res.status(500).send();
+            return res.status(500).send(err);
         }
-        res.status(200).send(footfalls);
+        return res.status(200).send(footfalls);
     });
 });
 
@@ -39,9 +39,9 @@ app.get("/latest/:location", (req, res) => {
     Footfall.getLatestFootfall(req.params.location, (err, footfall) => {
         if (err) {
             console.log(err);
-            res.status(500).send();
+            return res.status(500).send(err);
         }
-        res.status(200).send(footfall);
+        return res.status(200).send(footfall);
     });
 });
 
@@ -62,7 +62,7 @@ app.post("/history", (req, res) => {
     Footfall.getLatestFootfall(req.body.location, (err, footfall) => {
         if (err) {
             console.log(err);
-            res.status(500).send();
+            return res.status(500).send(err);
         }
         if(footfall){
             netFootfall += footfall.currentfootfall;
@@ -71,9 +71,9 @@ app.post("/history", (req, res) => {
         Footfall.insertFootfall(req.body, netFootfall, (err, footfall) => {
             if (err) {
                 console.log(err);
-                res.status(500).send();
+                return res.status(500).send(err);
             }
-            res.status(200).send(footfall);
+            return res.status(200).send(footfall);
         });
         
     });
