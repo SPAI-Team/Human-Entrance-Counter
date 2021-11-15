@@ -31,7 +31,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<!-- Slick Slider  CSS -->
 
-	<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+	<!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> -->
 	<!-- Main Stylesheet -->
 
 
@@ -100,7 +100,7 @@
 							<span>Count</span>
 							<h4 class="mb-3">Current number of visitors</h4>
 							<div id="CurrentFootfall" class="col p-4 mb-4">
-								<h2>38</h2>
+								<!-- <h2>38</h2> -->
 							</div>
 							<a href="#history" class="btn btn-main btn-round-full">View Past Statistics</a>
 						</div>
@@ -154,11 +154,11 @@
     Essential Scripts
     =====================================-->
 
-	<link rel=”stylesheet” href=”https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css”>
+	<!-- <link rel=”stylesheet” href=”https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css”> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script src=”https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js”></script>
+	<!-- <script src=”https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js”></script> -->
 	<!-- Main jQuery -->
-	<script src="../front_end/plugins/jquery/jquery.js"></script>
+	<!-- <script src="../front_end/plugins/jquery/jquery.js"></script> -->
 	<!-- Bootstrap 4.3.2 -->
 
 	<script src="js/script.js"></script>
@@ -170,7 +170,7 @@
 		$.get(
 		    "https://spai-human-counter-backend-api.herokuapp.com/latest/fc6",
 		    function(data) {
-		       alert('page content: ' + data);
+		    //    alert('hello');
 		    }
 		);
 		var options = {
@@ -444,25 +444,46 @@
 	console.log(activeBox.datasetLabel); // y-axis label
 	};
 	</script> -->
-	<script>
-		$(document).ready(function () {
-			const baseURL = "http://localhost:8081";
-			const publicURL = "http://localhost:8000";
 
+	<script>
+	// $.get(
+	// 	"https://spai-human-counter-backend-api.herokuapp.com/latest/fc6",
+	// 	function(data) {
+	// 	    alert('page content: ' + data);
+	// 	    }
+	// 	);
+	</script>
+	
+	<script>
+		
+		$(document).ready(function () {
+			// const baseURL = "http://localhost:8081";
 			// get current link
 			const url = window.location.toString();
 
 			// extract locatiom from current link
 			const location = parseInt(url.split("/").slice(-1)[0]);
+			// const publicURL = "http://localhost:8000";
+			// $.get({
+			// 	url: "https://spai-human-counter-backend-api.herokuapp.com/latest/fc6",
+			// 	success: function(data) {
+			// 	    alert(location);
+			// 		console.log(url);
+			// 	    },
+			// 	error: function () {
+					
+			// 	}
+			// 	});
 
 			// get footfall based on location
-			axios.get(`${baseURL}/latest/${location}`)
+			axios.get(`https://spai-human-counter-backend-api.herokuapp.com/latest/fc6`)
 				.then((response) => {
-					const CurrentFootfall = response.data[0];
-
+					const footfall = response.data;
+					// alert('page content: ' + response.data[0]);
+					alert(footfall.currentfootfall);
 					// show current footfall
-					const Footfall = `<h2>${CurrentFootfall}</h2>`
-					// append/prepend items
+					const Footfall = `<h2>${footfall.currentfootfall}</h2>`
+					// append/p repend items
 					$("#CurrentFootfall").append(Footfall)
 
 				})
