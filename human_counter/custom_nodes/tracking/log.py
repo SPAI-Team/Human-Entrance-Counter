@@ -6,26 +6,34 @@
 #if posted, update the timings and footfall value
 #if not then print error
 #amir:
+
+''
+from datetime import datetime
+from dateutil import relativedelta as rdelta
+
+
 import requests
 from datetime import datetime
 from typing import Optional, Dict, Any
 from peekingduck.pipeline.nodes.node import AbstractNode
-
+#https://peekingduck.readthedocs.io/en/stable/getting_started/03_custom_nodes.html
 class Node(AbstractNode):
     """<WHAT THIS NODE DOES>"""
-    '''This node checks the current coordinate of centroid and the past box location.
+    '''This node checks if the current time has reached the time intended (THE TIME WHICH IS OBTAINED AFTER THE POST INTERVAL IS INITIALISED)
+        and returns the footfall once it reaches the time 
         Args:
-            inputs (dict): dict with key "trackers"
+            inputs (dict): dict with key "footfall", postIntervalTiming with int "5", endpoint with str ""
         Returns:
-            outputs (dict): dict with keys "footfall", 'tracker'
+            outputs (dict): dict with keys "footfall"
       '''
 
 
-    def __init__(self, postIntervalTiming:int="5", endpoint:str="", config: Dict[str, Any] = None, **kwargs: Any) -> Dict[str, Any]:
-        self.__name__ = ''
+    def init(self, postIntervalTiming:int="5", endpoint:str="", config: Dict[str, Any] = None, **kwargs: Any) -> Dict[str, Any]:
+        self.name = ''
 
         self.endpoint = endpoint
         self.postIntervalTiming = postIntervalTiming #>> NEED TO DO Type Casting FROM STRING TO DATETIME FOR COMPARISON PURPOSE
+        postIntervalTiming = datetime.strptime(postIntervalTiming, "%m")
         self.pastPostTiming = datetime.now()
 
         if config is None:
@@ -33,7 +41,7 @@ class Node(AbstractNode):
                 "input": ["footfall"],
                 "output": ["footfall"]
             }
-        super().__init__(config, node_path=__name__, **kwargs)
+        super().init(config, node_path=name, **kwargs)
          
     def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
         current_footfall = inputs["footfall"]
@@ -46,16 +54,23 @@ class Node(AbstractNode):
                     "footfall": inputs['footfall']
                 }
             )
+
             ###### Check if the request has been posted successfully
             ###### if request posted, 
             ###### >> update the pastPostTiming
             ###### >> update the footfall value ( current_footfall = 0)
 
             ###### if not posted, print out error message
-            
-            pastPostTiming = self.postIntervalTiming + current_time
+            if postrequest.status_code == 200:
+                self.pastPostTiming = datetime.now()
+                current_footfall = 0
+            else:
+                print("Unknown error")  
 
+            pastPostTiming = self.postIntervalTiming + current_time
+            
         return {"footfall": current_footfall}
+
 # End of class Node
 
 # POST request to the endpoint        
@@ -117,3 +132,7 @@ try:
   r.raise_for_status()
 except requests.exceptions.HTTPError as e:
    print(e.response.text)
+
+
+#else if postrequest.status_code == 400:
+#print("Error in posting the request")
