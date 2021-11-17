@@ -1,61 +1,14 @@
-from peekingduck.pipeline.nodes.input.utils.read import VideoThread, VideoNoThread
-from peekingduck.pipeline.nodes.input.utils.preprocess import resize_image
-from peekingduck.pipeline.nodes.node import AbstractNode
-from typing import Dict, Any
+import sys
 import cv2 as cv
 import numpy as np
+from typing import Dict, Any
 from urllib.request import urlopen
-import os
-import datetime
-import time
-import sys
+from peekingduck.pipeline.nodes.input.utils.preprocess import resize_image
+from peekingduck.pipeline.nodes.node import AbstractNode
 
-# change to your ESP32-CAM ip
-url = "http://192.168.137.86:81/stream"
-CAMERA_BUFFRER_SIZE = 4096
-stream = urlopen(url)
-bts = b' '
-i = 0
-
-while True:
-    try:
-        bts += stream.read(CAMERA_BUFFRER_SIZE)
-        jpghead = bts.find(b'\xff\xd8')
-        jpgend = bts.find(b'\xff\xd9')
-        if jpghead > -1 and jpgend > -1:
-            jpg = bts[jpghead:jpgend+2]
-            bts = bts[jpgend+2:]
-            img = cv.imdecode(np.frombuffer(
-                jpg, dtype=np.uint8), cv.IMREAD_UNCHANGED)
-            # img=cv.flip(img,0) #>0:垂直翻轉, 0:水平翻轉, <0:垂直水平翻轉
-            # h,w=img.shape[:2]
-            #print('影像大小 高:' + str(h) + '寬：' + str(w))
-            # img=cv.resize(img,(640,480))
-            cv.imshow("a", img)
-        k = cv.waitKey(1)
-    except Exception as e:
-        print("Error:" + str(e))
-        bts = b''
-        stream = urlopen(url)
-        continue
-
-    k = cv.waitKey(1)
-    # 按a拍照存檔
-    if k & 0xFF == ord('a'):
-        cv.imwrite(str(i) + ".jpg", img)
-        i = i+1
-    # 按q離開
-    if k & 0xFF == ord('q'):
-        break
-cv.destroyAllWindows()
-
-
-"""
-Reads a videofeed from a jpg chunk from esp-32 cam (e.g. webcam)
-"""
 
 class Node(AbstractNode):
-    """Node to receive livestream as inputs.
+    """Reads a videofeed from a jpg chunk from esp-32 cam (e.g. webcam).
 
     Inputs:
         None
@@ -63,11 +16,7 @@ class Node(AbstractNode):
     Outputs:
         |img|
 
-        |filename|
-
         |pipeline_end|
-
-        |saved_video_fps|
 
     Configs:
         fps_saved_output_video (:obj:`int`): **default = 10**
@@ -105,25 +54,30 @@ class Node(AbstractNode):
 
     """
 
-    def __init__(self, config: Dict[str, Any] = None, **kwargs: Any) -> None:
+    def __init__(
+            self, url: str, 
+            resize: Dict[str, Any] = {"do_resizing": False, "width": 1280, "height": 720}, 
+            config: Dict[str, Any] = None, 
+            **kwargs: Any
+        ) -> None:
+        self.__name__ = ''
+        if config is None:
+            config = {
+                "input": [],
+                "output": ["img", "pipeline_end"]
+            }
         super().__init__(config, node_path=__name__, **kwargs)
-        self._allowed_extensions = ["mp4", "avi", "mov", "mkv"]
-        if self.threading:
-            self.videocap = VideoThread(                # type: ignore
-                self.input_source, self.mirror_image)
-        else:
-            self.videocap = VideoNoThread(              # type: ignore
-                self.input_source, self.mirror_image)
+        self.url = url
+        self.bts = b' '
+        self.resize = resize
+        self.stream = urlopen(url)
+        self.CAMERA_BUFFRER_SIZE = 4096
+        self.frames_log_freq = 100
 
-        width, height = self.videocap.resolution
-        self.logger.info('Device resolution used: %s by %s', width, height)
         if self.resize['do_resizing']:
             self.logger.info('Resizing of input set to %s by %s',
                              self.resize['width'],
                              self.resize['height'])
-        if self.filename.split('.')[-1] not in self._allowed_extensions:
-            raise ValueError("filename extension must be one of: ",
-                             self._allowed_extensions)
 
         self.frame_counter = 0
 
@@ -134,7 +88,7 @@ class Node(AbstractNode):
             self.jpgend = self.bts.find(b'\xff\xd9')
             if self.jpghead > -1 and self.jpgend > -1:
                 jpg = self.bts[jpghead:jpgend+2]
-                bts = self.bts[jpgend+2:]
+                self.bts = self.bts[jpgend+2:]
                 img = cv.imdecode(
                     np.frombuffer(jpg, dtype=np.uint8), cv.IMREAD_UNCHANGED
                 )
@@ -152,14 +106,17 @@ class Node(AbstractNode):
                 }
                 self.frame_counter += 1
                 if self.frame_counter % self.frames_log_freq == 0:
-                    self.logger.info('Frames Processed: %s ...',self.frame_counter)
+                    self.logger.info(
+                        'Frames Processed: %s ...', self.frame_counter)
             else:
                 outputs = {"img": None,
-                       "pipeline_end": True,
-                       "filename": self.filename,
-                       "saved_video_fps": self.fps_saved_output_video}
-                self.logger.warning("No video frames available for processing.")
+                           "pipeline_end": True,
+                           "filename": self.filename,
+                           "saved_video_fps": self.fps_saved_output_video}
+                self.logger.warning(
+                    "No video frames available for processing.")
         except Exception as e:
             print("Error:" + str(e))
             sys.exit(1)
+
         return outputs
