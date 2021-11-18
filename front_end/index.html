@@ -70,14 +70,14 @@
 						<h1 class="spaiheader mb-3 mt-3" id="spaiheader">SPAI Human Counter</h1>
 
 						<div class="select">
-							<select name="format" id="format">
-								<option selected disabled>Select a Location</option>
+							<select id="setFoodCourt">
+								<option selected disabled value="fc1">Select a Location</option>
 								<option value="fc1">Food Court 1</option>
 								<option value="fc2">Food Court 2</option>
 								<option value="fc3">Food Court 3</option>
 								<option value="fc4">Food Court 4</option>
 								<option value="fc5">Food Court 5</option>
-								<option value="fc5">Food Court 6</option>
+								<option value="fc6">Food Court 6</option>
 							</select>
 						</div>
 					</div>
@@ -111,10 +111,13 @@
 							</div>
 							<span>brief description of how this is calculated?</span>
 							<h4 class="mb-5">Current crowd level</h4>
-							<p class="mb-4">-Display current crowd level-</p>
+							<div class="mb-4" id="crowdLevel">
+
+							</div>
 							<ul class="w-hours list-unstyled">
 
-								<li class="d-flex justify-content-between">Num of seats available : <span>xxx</span>
+								<li class="d-flex justify-content-between" >Estimated Num of seats available :
+									<div id="NumOfSeat"></div>
 								</li>
 								<li class="d-flex justify-content-between">Recommend to go :<span>yes/no?</span></li>
 							</ul>
@@ -161,7 +164,7 @@
 	<!-- <script src="../front_end/plugins/jquery/jquery.js"></script> -->
 	<!-- Bootstrap 4.3.2 -->
 
-	<script src="js/script.js"></script>
+
 
 
 
@@ -374,45 +377,14 @@
 	</script>
 
 
-	<!-- <script>
-	$(document).ready(function(){
-			$.ajax({
-				url: `http://localhost:8081//history/:location/:startTime/:endTime`,
-				type: "post",
-				data: {
-					foodcourt: "Food Court 1"
-				},
-				success: function(heat_map) {
-					$("#divGraph").html(heat_map);
-					$("#graph").chart = new Chart($("#graph"), $("#graph").data("settings"));
-				}
-			});
-
-			$("#setFoodcourt").change(function(){
-				$.ajax({
-				url: "queries.php",
-				type: "post",
-				data: {
-					foodcourt: $(this).val()
-				},
-				success: function(heat_map) {
-					$("#divGraph").html(heat_map);
-					$("#graph").chart = new Chart($("#graph"), $("#graph").data("settings"));
-				}
-			});
-			})
-		});
 
 
-
-      
-	</script> -->
-	<!-- <script>
+<!-- <script>
 	var data = {
 		labels = ['0h','1h','2h','3h','4h','5h','6h','7h','8h','9h','10h','11h'],
 		datasets = [
-			{
-				label: 'Monday',
+		{
+			label: 'Monday',
 				data: [8, 6, 5, 7, 9, 8, 1, 6, 3, 3, 8, 7]
 			},
 			{
@@ -431,66 +403,128 @@
 				label: 'Friday',
 				data: [1, 0, 0, 7, 0, 4, 1, 3, 4, 5, 1, 10]
 			}
-		]
-	};
-	
-	var ctx = document.getElementById('heatmap').getContext('2d');
-	var newChart = new Chart(ctx).HeatMap(data);
-	
-	canvas.onclick = function(evt){
-	var activeBox = chart.getBoxAtEvent(evt);
+			]
+		};
+		
+		var ctx = document.getElementById('heatmap').getContext('2d');
+		var newChart = new Chart(ctx).HeatMap(data);
+		
+		canvas.onclick = function(evt){
+			var activeBox = chart.getBoxAtEvent(evt);
 	console.log(activeBox.value); // value at point
 	console.log(activeBox.label); // x-axis label
 	console.log(activeBox.datasetLabel); // y-axis label
-	};
-	</script> -->
+};
+</script> -->
 
-	<script>
+<script>
 	// $.get(
 	// 	"https://spai-human-counter-backend-api.herokuapp.com/latest/fc6",
 	// 	function(data) {
-	// 	    alert('page content: ' + data);
-	// 	    }
-	// 	);
+		// 	    alert('page content: ' + data);
+		// 	    }
+		// 	);
 	</script>
 	
+	<!-- <script>
+	$(document).ready(function(){
+			$.ajax({
+				url: `http://localhost:8081//history/:location/:startTime/:endTime`,
+				type: "post",
+				data: {
+					foodcourt: "Food Court 1"
+				},
+				success: function(heat_map) {
+					$("#divGraph").html(heat_map);
+					$("#graph").chart = new Chart($("#graph"), $("#graph").data("settings"));
+				}
+			});
+	
+			$("#setFoodcourt").change(function(){
+				$.ajax({
+				url: "queries.php",
+				type: "post",
+				data: {
+					foodcourt: $(this).val()
+				},
+				success: function(heat_map) {
+					$("#divGraph").html(heat_map);
+					$("#graph").chart = new Chart($("#graph"), $("#graph").data("settings"));
+				}
+			});
+			})
+		});
+	</script> -->
 	<script>
 		
 		$(document).ready(function () {
 			// const baseURL = "http://localhost:8081";
 			// get current link
 			const url = window.location.toString();
-
+			
 			// extract locatiom from current link
 			const location = parseInt(url.split("/").slice(-1)[0]);
-			// const publicURL = "http://localhost:8000";
-			// $.get({
-			// 	url: "https://spai-human-counter-backend-api.herokuapp.com/latest/fc6",
-			// 	success: function(data) {
-			// 	    alert(location);
-			// 		console.log(url);
-			// 	    },
-			// 	error: function () {
-					
-			// 	}
-			// 	});
+			var foodcourt = $('#setFoodCourt').val();
 
-			// get footfall based on location
-			axios.get(`https://spai-human-counter-backend-api.herokuapp.com/latest/fc6`)
-				.then((response) => {
-					const footfall = response.data;
+				
+				// get footfall based on location
+			axios.get(`https://spai-human-counter-backend-api.herokuapp.com/latest/fc1`)
+			.then((response) => {
+				const footfall = response.data;
+				var foodcourt = $('#setFoodCourt option:selected').text();
 					// alert('page content: ' + response.data[0]);
-					alert(footfall.currentfootfall);
+					console.log(footfall.currentfootfall);
+					console.log(foodcourt);
 					// show current footfall
-					const Footfall = `<h2>${footfall.currentfootfall}</h2>`
+					var Seats = 150;
+					Seats = Seats-= (footfall.currentfootfall ?? 0)
+					var crowd = (footfall.currentfootfall / Seats) *100
+					const Footfall = `<h2>${footfall.currentfootfall ?? "-"}</h2>`
+					const crowdLevel = `<h3>${crowd.toFixed(2) ?? "-"}%</h3>`
+					const NumOfSeat = `<h4>${Seats ?? "-"}</h4>`
 					// append/p repend items
-					$("#CurrentFootfall").append(Footfall)
-
+					
+					$("#CurrentFootfall").html(Footfall)
+					$("#NumOfSeat").html(NumOfSeat)
+					$('#crowdLevel').html(crowdLevel)
+					
 				})
 				// catch any err
 				.catch((error) => {
 					console.log(error)
+				});
+
+			$('#setFoodCourt').change(function() {
+				var foodcourt = $('#setFoodCourt').val();
+				// console.log(foodcourt);
+			axios.get(`https://spai-human-counter-backend-api.herokuapp.com/latest/${foodcourt}`)
+			.then((response) => {
+				const footfall = response.data;
+				console.log(response);
+					// alert('page content: ' + response.data[0]);
+					console.log(footfall.currentfootfall);
+					// show current footfall
+					var Seats = 150;
+					Seats = Seats-= (footfall.currentfootfall ?? 0)
+					var crowd = (footfall.currentfootfall / Seats) *100
+					const Footfall = `<h2>${footfall.currentfootfall ?? "-"}</h2>`
+					const crowdLevel = `<h3>${crowd.toFixed(2) ?? "-"}%</h3>`
+					const NumOfSeat = `<h4>${Seats ?? "-"}</h4>`
+					// append/p repend items
+					
+					$("#CurrentFootfall").html(Footfall)
+					$("#NumOfSeat").html(NumOfSeat)
+					$('#crowdLevel').html(crowdLevel)
+					
 				})
+				// catch any err
+				.catch((error) => {
+					console.log(error)
+				});
+			});
+				
+
+			
 		});
 	</script>
 
