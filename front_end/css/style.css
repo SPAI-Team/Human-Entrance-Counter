@@ -29,6 +29,8 @@ html {
 #description {
   text-shadow: 3px 3px #2d3142;
   font-size:  18px;
+  background-color: rgba(102, 103, 122, 0.5);
+
 }
 
 #spaiheader {
