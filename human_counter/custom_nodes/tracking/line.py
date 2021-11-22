@@ -30,16 +30,9 @@ class Node(AbstractNode):
             config = {
                 'input': ["img"],
                 'output': ["img"]
-            }
-        
-        # trackableObjects[objectID] = to
+            } 
 
-        # text = "ID {}".format(objectID)
-        # cv2.putText(img, text, (centroid[0] - 10, centroid[1] - 10),
-        # cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-        # cv2.circle(img, (centroid[0], centroid[1]), 4, (255, 255, 255), -1)
-        
-        super().__init__(config, node_path = __name__, **kwargs)
+        super().__init__(config, node_path = __name__, **kwargs)  
     
     def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
         '''
@@ -49,6 +42,14 @@ class Node(AbstractNode):
         Returns:
             outputs (dict): dict with key "img".
         '''
+            trackableObjects[objectID] = to
+
+             text = "ID {}".format(objectID)
+            cv2.putText(inputs['img'], text, (centroid[0] - 10, centroid[1] - 10),
+                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+             cv2.circle(
+                 inputs['img'], (centroid[0], centroid[1]), 4, (255, 255, 255), -1)
+        
         height, width, _ = inputs['img'].shape
         if self.axis_y:
             image = cv2.line(inputs['img'], (int(self.roi*width), 0), (int(self.roi*width), height), (0xFF, 0, 0), 5)
@@ -57,14 +58,14 @@ class Node(AbstractNode):
         
         return {'img': image}
 
-# #https://github.com/TannerGilbert/Tensorflow-2-Object-Counting/blob/master/tensorflow_cumulative_object_counting.py
-#             trackableObjects[objectID] = to
+    # trackableObjects[objectID] = to
 
-#             text = "ID {}".format(objectID)
-#             cv2.putText(image_np, text, (centroid[0] - 10, centroid[1] - 10),
-#                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-#             cv2.circle(
-#                 image_np, (centroid[0], centroid[1]), 4, (255, 255, 255), -1)
+    #         text = "ID {}".format(objectID)
+    #         cv2.putText(image_np, text, (centroid[0] - 10, centroid[1] - 10),
+    #                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+    #         cv2.circle(
+    #             image_np, (centroid[0], centroid[1]), 4, (255, 255, 255), -1)
+        
 
 #         # Draw ROI line
 #         if x_axis:
@@ -73,3 +74,6 @@ class Node(AbstractNode):
 #         else:
 #             cv2.line(image_np, (0, int(roi_position*height)),
 #                      (width, int(roi_position*height)), (0xFF, 0, 0), 5)
+
+# #https://github.com/TannerGilbert/Tensorflow-2-Object-Counting/blob/master/tensorflow_cumulative_object_counting.py
+
