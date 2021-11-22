@@ -35,13 +35,11 @@ class Node(AbstractNode):
         # trackableObjects[objectID] = to
 
         # text = "ID {}".format(objectID)
-        # cv2.putText(image_np, text, (centroid[0] - 10, centroid[1] - 10),
+        # cv2.putText(img, text, (centroid[0] - 10, centroid[1] - 10),
         # cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-        # cv2.circle(
-        # image_np, (centroid[0], centroid[1]), 4, (255, 255, 255), -1)
-        # return {'img': image_np}
-
-        # super().__init__(config, node_path = __name__, **kwargs)
+        # cv2.circle(img, (centroid[0], centroid[1]), 4, (255, 255, 255), -1)
+        
+        super().__init__(config, node_path = __name__, **kwargs)
     
     def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
         '''
