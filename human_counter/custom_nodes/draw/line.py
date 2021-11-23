@@ -41,7 +41,7 @@ class Node(AbstractNode):
             inputs (dict): dict with key "img".
         Returns:
             outputs (dict): dict with key "img".
-        '''
+        ''' 
             trackableObjects[objectID] = to
 
              text = "ID {}".format(objectID)
