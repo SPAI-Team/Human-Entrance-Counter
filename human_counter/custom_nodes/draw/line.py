@@ -1,5 +1,6 @@
 from typing import Any, Dict
 from peekingduck.pipeline.nodes.node import AbstractNode
+from centroidtracker import CentroidTracker
 import cv2
 
 class Node(AbstractNode):
@@ -34,21 +35,31 @@ class Node(AbstractNode):
 
         super().__init__(config, node_path = __name__, **kwargs)  
     
-    def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
+    def run(self, inputs: Dict[str, Any],trackableObjects,to,centroid) -> Dict[str, Any]:
         '''
         This node draws a line based on size of image, roi value and axis
         Args:
             inputs (dict): dict with key "img".
         Returns:
             outputs (dict): dict with key "img".
-        ''' 
-            trackableObjects[objectID] = to
+        '''
+        self.__to__ = to
+        self.__trackableObjects__ = trackableObjects
+        self.__centroid__ = centroid
 
-             text = "ID {}".format(objectID)
-            cv2.putText(inputs['img'], text, (centroid[0] - 10, centroid[1] - 10),
-                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-             cv2.circle(
-                 inputs['img'], (centroid[0], centroid[1]), 4, (255, 255, 255), -1)
+
+        ct = CentroidTracker(maxDisappeared=40, maxDistance=50)
+        objects = ct.update(self.__trackableObjects__)
+        #trackers = []
+        #trackableObjects = {}
+        for (objectID, centroid) in objects.items():
+            to = trackableObjects.get(objectID, None)     
+        trackableObjects[objectID] = to
+
+        text = "ID {}".format(objectID)
+        cv2.putText(inputs['img'], text, (centroid[0] - 10, centroid[1] - 10),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+        cv2.circle(inputs['img'], (centroid[0], centroid[1]), 4, (255, 255, 255), -1)
         
         height, width, _ = inputs['img'].shape
         if self.axis_y:
@@ -74,6 +85,3 @@ class Node(AbstractNode):
 #         else:
 #             cv2.line(image_np, (0, int(roi_position*height)),
 #                      (width, int(roi_position*height)), (0xFF, 0, 0), 5)
-
-# #https://github.com/TannerGilbert/Tensorflow-2-Object-Counting/blob/master/tensorflow_cumulative_object_counting.py
-
