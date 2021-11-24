@@ -64,7 +64,7 @@ def main(
     Runner(nodes=nodes).run()
 
 if __name__ == "__main__":
-    input_source = "http://192.168.86.36:8080/stream.mjpeg"
+    input_source = "0"
     rotation = 270
     blur = False
     main(input_source=input_source, rotation=rotation, blur=blur)
