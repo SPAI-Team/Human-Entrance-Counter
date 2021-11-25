@@ -70,5 +70,5 @@ if __name__ == "__main__":
     # input_source = "http://192.168.137.129/"
     # input_source = "http://192.168.109.214:8080/stream.mjpeg"
     rotation = 0
-    blur = True
+    blur = False
     main(input_source=None, rotation=rotation, blur=blur)
