@@ -1,6 +1,6 @@
 from typing import Any, Dict
 from peekingduck.pipeline.nodes.node import AbstractNode
-from centroidtracker import CentroidTracker
+#from centroidtracker import CentroidTracker
 import cv2
 
 class Node(AbstractNode):
@@ -48,7 +48,7 @@ class Node(AbstractNode):
         self.__centroid__ = centroid
 
 
-        ct = CentroidTracker(maxDisappeared=40, maxDistance=50)
+        #ct = CentroidTracker(maxDisappeared=40, maxDistance=50)
         objects = ct.update(self.__trackableObjects__)
         #trackers = []
         #trackableObjects = {}
