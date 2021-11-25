@@ -10,7 +10,7 @@ from peekingduck.pipeline.nodes.output import media_writer, screen
 from peekingduck.pipeline.nodes.node import AbstractNode
 from custom_nodes.debug import printPipe
 from custom_nodes.input import custom_input
-from custom_nodes.draw import custom_legend, rotate, line
+from custom_nodes.draw import custom_legend, rotate, line, drawCentroid
 from custom_nodes.tracking import tracker, counter
 
 def main(
@@ -45,6 +45,7 @@ def main(
     rotate_node = rotate.Node(rotation=rotation)
     legend_node = custom_legend.Node(position="top",include=["fps", "footfall"])
     roi_node = line.Node()
+    draw_centroid_node = drawCentroid.Node()
 
     print("Peekingduck is Running")
     nodes = [
@@ -56,17 +57,18 @@ def main(
         fps_node,
         draw_bbox_node,
         legend_node,
-        roi_node,
         blur_bbox_node,
+        roi_node,
+        draw_centroid_node,
         output_node
     ]
     if not blur: # remove blur node if not specified
-        nodes.pop(-2)
+        nodes.pop(-4)
     Runner(nodes=nodes).run()
 
 if __name__ == "__main__":
     # input_source = "http://192.168.137.129/"
     # input_source = "http://192.168.109.214:8080/stream.mjpeg"
     rotation = 0
-    blur = False
+    blur = True
     main(input_source=None, rotation=rotation, blur=blur)
