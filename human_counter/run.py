@@ -10,7 +10,7 @@ from peekingduck.pipeline.nodes.output import media_writer, screen
 from peekingduck.pipeline.nodes.node import AbstractNode
 from custom_nodes.debug import printPipe
 from custom_nodes.input import custom_input
-from custom_nodes.draw import custom_legend, line, rotate
+from custom_nodes.draw import custom_legend, rotate
 from custom_nodes.tracking import tracker, counter
 
 def main(
@@ -26,7 +26,8 @@ def main(
         # resize = dict(do_resizing=True, width=480, height=480),
         threading= True
     )
-    
+    # input_node = custom_input.Node(url = input_source)
+
     # Model Nodes
     yolo_node = yolo.Node(
         detect_ids =[0], # detect human for 0
@@ -43,7 +44,7 @@ def main(
     blur_bbox_node = blur_bbox.Node()
     rotate_node = rotate.Node(rotation=rotation)
     legend_node = custom_legend.Node(position="top",include=["fps", "footfall"])
-    roi_node = line.Node()
+    # roi_node = line.Node()
 
     print("Peekingduck is Running")
     nodes = [
@@ -55,7 +56,7 @@ def main(
         fps_node,
         draw_bbox_node,
         legend_node,
-        roi_node,
+        # roi_node,
         blur_bbox_node,
         output_node
     ]
@@ -64,7 +65,8 @@ def main(
     Runner(nodes=nodes).run()
 
 if __name__ == "__main__":
-    input_source = "http://192.168.86.36:8080/stream.mjpeg"
-    rotation = 270
+    # input_source = "http://192.168.137.129/"
+    input_source = "http://192.168.109.214:8080/stream.mjpeg"
+    rotation = 90
     blur = False
     main(input_source=input_source, rotation=rotation, blur=blur)
