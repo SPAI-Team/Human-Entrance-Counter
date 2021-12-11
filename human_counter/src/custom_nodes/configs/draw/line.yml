@@ -1,0 +1,5 @@
+input: ["img"]
+output: ["img"]
+
+roi : self.roi # percentage of frame
+axis_y : self.axis_y # orient of virtual line

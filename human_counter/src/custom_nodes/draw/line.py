@@ -22,15 +22,8 @@ class Node(AbstractNode):
     '''
 
     def __init__(self, roi = 0.5, axis_y = True, config: Dict[str, Any] = None, **kwargs: Any) -> None:
-        self.__name__ = ''
-        self.roi = roi # percentage of frame
-        self.axis_y = axis_y # orient of virtual line
-
-        if config is None:
-            config = {
-                'input': ["img"],
-                'output': ["img"]
-            } 
+        roi = self.roi # percentage of frame
+        axis_y = self.axis_y # orient of virtual line
 
         super().__init__(config, node_path = __name__, **kwargs)  
     
