@@ -8,7 +8,7 @@ from peekingduck.pipeline.nodes.dabble import fps
 from peekingduck.pipeline.nodes.output import media_writer, screen
 from custom_nodes.input import custom_input
 from custom_nodes.dabble import tracker, counter, printPipe
-from custom_nodes.draw import custom_legend, rotate, line, drawCentroid
+from custom_nodes.draw import customLegend, rotate, line, drawCentroid
 assert peekingduck.__version__ == 'v1.1.1' , "Peekingduck is not Updated to the latest version. Run `pip install -U peekingduck` to update your peekingduck version."
 
 @click.command()
@@ -57,7 +57,7 @@ def main(source:str, rotation:int, blur:bool) -> None:
     draw_bbox_node = bbox.Node()
     blur_bbox_node = blur_bbox.Node()
     rotate_node = rotate.Node(rotation=int(rotation))
-    legend_node = custom_legend.Node(position="top",include=["fps", "footfall"])
+    legend_node = customLegend.Node(position="top",include=["fps", "footfall"])
     roi_node = line.Node()
     draw_centroid_node = drawCentroid.Node()
 
