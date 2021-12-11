@@ -17,15 +17,16 @@ class Node(AbstractNode):
             position of barrier to draw the divider line
 
         axis_y (:obj:`bool`): **default=True
-            use a verticle line to act as barrier
+            use a vertical line to act as barrier
     
     '''
 
-    def __init__(self, roi = 0.5, axis_y = True, config: Dict[str, Any] = None, **kwargs: Any) -> None:
-        roi = self.roi # percentage of frame
-        axis_y = self.axis_y # orient of virtual line
+    def __init__(self, config: Dict[str, Any] = None, **kwargs: Any) -> None:
+      super().__init__(config, node_path = __name__, **kwargs)  
+      roi = self.roi # percentage of frame
+      axis_y = self.axis_y # orient of virtual line
 
-        super().__init__(config, node_path = __name__, **kwargs)  
+        
     
     def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
         '''

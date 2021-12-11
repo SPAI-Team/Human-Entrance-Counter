@@ -1,5 +1,5 @@
 input: ["img"]
 output: ["img"]
 
-roi : self.roi # percentage of frame
-axis_y : self.axis_y # orient of virtual line
+roi : 0.5 # position of barrier to draw the divider line
+axis_y : True # use a vertical line to act as barrier
