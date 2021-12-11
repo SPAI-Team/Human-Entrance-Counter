@@ -1,0 +1,8 @@
+input: ["img", "trackers"]
+output: ["footfall"]
+
+roi: 0.5 # Percentage of frame
+axis_y: True # Orient of virtual line
+endpoint: Null # Url link to send Post request of net-footfall
+postIntervalTiming: 5 # Interval to send a Post request counted in minutes (i.e. default parameter will send a post request every 5 minutes)
+location: "fc6" # Unique location name which the API Server receives
