@@ -6,9 +6,9 @@ from peekingduck.pipeline.nodes.model import yolo
 from peekingduck.pipeline.nodes.draw import bbox, blur_bbox
 from peekingduck.pipeline.nodes.dabble import fps
 from peekingduck.pipeline.nodes.output import media_writer, screen
-from custom_nodes.input import custom_input
-from custom_nodes.dabble import tracker, counter, printPipe
-from custom_nodes.draw import customLegend, rotate, line, drawCentroid
+from src.custom_nodes.input import customInput
+from src.custom_nodes.dabble import tracker, counter, printPipe
+from src.custom_nodes.draw import customLegend, rotate, line, drawCentroid
 assert peekingduck.__version__ == 'v1.1.1' , "Peekingduck is not Updated to the latest version. Run `pip install -U peekingduck` to update your peekingduck version."
 
 @click.command()
@@ -38,7 +38,7 @@ def main(source:str, rotation:int, blur:bool) -> None:
         # resize = dict(do_resizing=True, width=480, height=480),
         threading= True
     )
-    # input_node = custom_input.Node(url = source)
+    # input_node = customInput.Node(url = source)
 
     # Model Nodes
     yolo_node = yolo.Node(
