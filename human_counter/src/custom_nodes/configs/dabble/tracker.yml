@@ -1,0 +1,5 @@
+input: ["img","bboxes"]
+output: ["trackers"]
+
+maxDistance: 50 # max distance between centroids to assign a new centroid Id
+maxDisappeared: 40 # max number of frame for an object to be disappeared before assigning new centroid Id.

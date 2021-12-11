@@ -1,11 +1,11 @@
 nodes:
 - input.live
 - custom_nodes.draw.rotate:
-    rotation: 90
+    rotation: 0
 - model.yolo
-# - custom_nodes.dabble.tracker_node:
-#     maxDisappeared: 60
-# - custom_nodes.dabble.counter_node:
+- custom_nodes.dabble.tracker:
+    maxDisappeared: 60
+# - custom_nodes.dabble.counter:
 #     endpoint: "https://spai-human-counter-backend-api.herokuapp.com/history/"
 - dabble.fps
 - draw.bbox
