@@ -1,17 +1,17 @@
 nodes:
 - input.live
-# - custom_nodes.draw.rotate:
-#   rotation: 0
+- custom_nodes.draw.rotate:
+    rotation: 90
 - model.yolo
 # - custom_nodes.dabble.tracker_node:
-#   maxDisappeared: 60
+#     maxDisappeared: 60
 # - custom_nodes.dabble.counter_node:
-#   endpoint: "https://spai-human-counter-backend-api.herokuapp.com/history/"
+#     endpoint: "https://spai-human-counter-backend-api.herokuapp.com/history/"
 - dabble.fps
 - draw.bbox
 # - custom_nodes.customLegend:
-#   include: ["fps", "footfall"]
-#   position: "top"
+#     include: ["fps", "footfall"]
+#     position: "top"
 - draw.blur_bbox
 # - custom_nodes.draw.line
 # - custom_nodes.draw.drawCentroid

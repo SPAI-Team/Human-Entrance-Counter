@@ -19,18 +19,11 @@ class Node(AbstractNode):
             only accept 0, 90, 180 and 270 as valid arguments.
     '''
 
-    def __init__(self, rotation: int = 0, config: Dict[str, Any] = None, **kwargs: Any) -> None:
-        __name__ = ""
-        if config is None:
-            config = {
-                'input': ["img"],
-                'output': ["img"]
-            }
+    def __init__(self, config: Dict[str, Any] = None, **kwargs: Any) -> None:
         super().__init__(config, node_path=__name__, **kwargs)
-        if rotation not in (0, 90, 180, 270):
+        if self.rotation not in (0, 90, 180, 270):
             raise ValueError(
                 "Rotate node only accept 0, 90, 180 and 270 as valid arguments")
-        self.rotation = rotation
         self.rotation_policy = {
             0: None,
             90: cv2.ROTATE_90_CLOCKWISE,
@@ -46,6 +39,7 @@ class Node(AbstractNode):
         Returns:
             outputs (dict): dict with key "img".
         '''
+        print(self.rotation)
         if self.rotation != 0:
             return {'img': cv2.rotate(inputs["img"], self.rotation_policy[self.rotation])}
         else:

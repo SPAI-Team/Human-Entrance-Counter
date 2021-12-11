@@ -1,0 +1,4 @@
+input: ["img"]
+output: ["img"]
+
+rotation: 0 # rotate the image frames clockwise in degree
