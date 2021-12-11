@@ -1,12 +1,17 @@
 nodes:
-- input.live
+- input.live:
+    input_source: 0 # Use Webcam
+    # input_source: "http://192.168.86.36:8080/stream.mjpeg" # Use http stream
+    threading: True
+# - custom_nodes.input.customInput # Use ESP-32 Cam
+#       url: "http://192.168.xx.xx/"
 - custom_nodes.draw.rotate:
     rotation: 0
 - model.yolo
 - custom_nodes.dabble.tracker:
     maxDisappeared: 60
-# - custom_nodes.dabble.counter:
-#     endpoint: "https://spai-human-counter-backend-api.herokuapp.com/history/"
+- custom_nodes.dabble.counter:
+    endpoint: "https://spai-human-counter-backend-api.herokuapp.com/history/"
 - dabble.fps
 - draw.bbox
 # - custom_nodes.draw.customLegend:

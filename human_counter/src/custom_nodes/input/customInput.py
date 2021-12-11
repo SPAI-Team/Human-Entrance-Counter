@@ -1,4 +1,3 @@
-import sys
 import cv2 as cv
 import numpy as np
 from typing import Dict, Any
@@ -19,61 +18,30 @@ class Node(AbstractNode):
         |pipeline_end|
 
     Configs:
-        fps_saved_output_video (:obj:`int`): **default = 10**
+        url (:obj:`str`): **default = null**
 
-            FPS of the mp4 file after livestream is processed and exported.
-            FPS dependent on running machine performance.
-
-        filename (:obj:`str`):  **default = "webcamfeed.mp4"**
-
-            Filename of the mp4 file if livestream is exported.
+            url to fetch http stream buffer. Raise warning if it is None.
 
         resize (:obj:`Dict`): **default = { do_resizing: False, width: 1280, height: 720 }**
 
             Dimension of extracted image frame
 
-        input_source (:obj:`int`): **default = 0 (for webcam)**
-
-            Refer to `OpenCV doucmentation
-            <https://docs.opencv.org/3.4/d4/d15/group__videoio__flags__base.html#ga023786be1ee68a9105bf2e48c700294d/>`_
-            for list of source stream codes
-
-        mirror_image (:obj:`bool`): **default = False**
-
-            Boolean to set extracted image frame as mirror image of input stream
-
         frames_log_freq (:obj:`int`): **default = 100**
 
             Logs frequency of frames passed in cli
-
-        threading (:obj:`bool`): **default = False**
-
-            Boolean to enable threading when reading frames from camera.
-            The FPS can increase up to 30% if this is enabled for Windows and MacOS.
-            This will also be supported in Linux in future PeekingDuck versions.
-
     """
 
     def __init__(
             self, url: str, 
-            resize: Dict[str, Any] = {"do_resizing": False, "width": 500, "height": 500}, 
             config: Dict[str, Any] = None, 
             **kwargs: Any
         ) -> None:
-        self.__name__ = ''
-        if config is None:
-            config = {
-                "input": ['none'],
-                "output": ["img", "pipeline_end"]
-            }
         super().__init__(config, node_path=__name__, **kwargs)
-        self.url = url
+        assert url is not None, "Source url cannot be None. Please specify a url to fetch stream buffer."
         self.bts = b''
-        self.resize = resize
-        self.stream = urlopen(self.url, timeout=5)
-        self.CAMERA_BUFFRER_SIZE = 4096
-        self.frames_log_freq = 100
         self.img=None
+        self.CAMERA_BUFFRER_SIZE = 4096
+        self.stream = urlopen(self.url, timeout=5)
 
         if self.resize['do_resizing']:
             self.logger.info('Resizing of input set to %s by %s',
@@ -112,7 +80,7 @@ class Node(AbstractNode):
             except Exception as e:
                 # self.bts=b""
                 # self.stream=urlopen(self.url)
-                print("Error:" + str(e))
+                self.logger.warning("Error:" + str(e))
                 outputs = {"img": None,
                            "pipeline_end": True
                 }
