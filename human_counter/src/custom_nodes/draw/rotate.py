@@ -39,7 +39,6 @@ class Node(AbstractNode):
         Returns:
             outputs (dict): dict with key "img".
         '''
-        print(self.rotation)
         if self.rotation != 0:
             return {'img': cv2.rotate(inputs["img"], self.rotation_policy[self.rotation])}
         else:
