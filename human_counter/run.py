@@ -1,32 +1,44 @@
+import click
 import peekingduck
-assert peekingduck.__version__ == 'v1.1.0' , "Peekingduck is not Updated to the latest version."
-
 from peekingduck.runner import Runner
 from peekingduck.pipeline.nodes.input import live
 from peekingduck.pipeline.nodes.model import yolo
-from peekingduck.pipeline.nodes.draw import bbox, legend, blur_bbox
+from peekingduck.pipeline.nodes.draw import bbox, blur_bbox
 from peekingduck.pipeline.nodes.dabble import fps
 from peekingduck.pipeline.nodes.output import media_writer, screen
-from peekingduck.pipeline.nodes.node import AbstractNode
-from custom_nodes.debug import printPipe
 from custom_nodes.input import custom_input
+from custom_nodes.dabble import tracker, counter, printPipe
 from custom_nodes.draw import custom_legend, rotate, line, drawCentroid
-from custom_nodes.tracking import tracker, counter
+assert peekingduck.__version__ == 'v1.1.1' , "Peekingduck is not Updated to the latest version. Run `pip install -U peekingduck` to update your peekingduck version."
 
-def main(
-    input_source:str, 
-    rotation:int,
-    blur:bool
-) -> None:
-    print("Initialising Peekingduck Nodes")
+@click.command()
+@click.option(
+    "--source",
+    "-s",
+    default=None
+)
+@click.option(
+    "--rotation",
+    "-r",
+    type=click.Choice(["0", "90", "180", "270"]),
+    default="0"
+)
+@click.option(
+    "--blur",
+    "-b",
+    is_flag=True,
+    default=False
+)
+def main(source:str, rotation:int, blur:bool) -> None:
+    click.echo(source)
 
     # Input Nodes
     input_node = live.Node(
-        input_source = input_source if input_source else 0,
+        input_source = source if source else 0,
         # resize = dict(do_resizing=True, width=480, height=480),
         threading= True
     )
-    # input_node = custom_input.Node(url = input_source)
+    # input_node = custom_input.Node(url = source)
 
     # Model Nodes
     yolo_node = yolo.Node(
@@ -36,13 +48,15 @@ def main(
     # Dabble Nodes
     fps_node = fps.Node(fps_log_display=True)
     tracker_node = tracker.Node(maxDisappeared = 60)
-    counter_node = counter.Node(endpoint = "https://spai-human-counter-backend-api.herokuapp.com/history/")
+    counter_node = counter.Node(
+        endpoint = "https://spai-human-counter-backend-api.herokuapp.com/history/"
+    )
     
     # Draw Nodes
     output_node = screen.Node()
     draw_bbox_node = bbox.Node()
     blur_bbox_node = blur_bbox.Node()
-    rotate_node = rotate.Node(rotation=rotation)
+    rotate_node = rotate.Node(rotation=int(rotation))
     legend_node = custom_legend.Node(position="top",include=["fps", "footfall"])
     roi_node = line.Node()
     draw_centroid_node = drawCentroid.Node()
@@ -67,8 +81,4 @@ def main(
     Runner(nodes=nodes).run()
 
 if __name__ == "__main__":
-    # input_source = "http://192.168.137.129/"
-    # input_source = "http://192.168.109.214:8080/stream.mjpeg"
-    rotation = 0
-    blur = False
-    main(input_source=None, rotation=rotation, blur=blur)
+    main()
