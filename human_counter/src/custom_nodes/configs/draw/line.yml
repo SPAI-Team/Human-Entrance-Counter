@@ -1,0 +1,5 @@
+input: ["img"]
+output: ["img"]
+
+roi : 0.5 # position of barrier to draw the divider line
+axis_y : True # use a vertical line to act as barrier

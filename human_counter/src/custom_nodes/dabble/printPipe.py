@@ -13,29 +13,18 @@ class Node(AbstractNode):
         |none|
 
     Args:
-        targetData (:obj:`List`): 
+        dataInPipe (:obj:`List`): 
             Keys of target data in pipeline to be printed.
             e.g. ['bboxes','bbox_labels']
         
-        skipFrames (:obj:`int`):
+        skipFrames (:obj:`int`): **default = 100**
             Number of frames to be skipped before printing the target data.
-        
     """
 
     def __init__(self, config: Dict[str, Any] = None, **kwargs: Any) -> None:
-        self.__name__ = ''
-        self.curFrame = 0
-        self.dataInPipe = kwargs["dataInPipe"]
-        self.skipFrames = kwargs["skipFrames"]
-        assert len(self.dataInPipe) != 0, "Please enter at least one target data to be printed"
-
-        if config is None:
-            config = {
-                "input": [*self.dataInPipe],
-                "output": ["none"]
-            }
         super().__init__(config, node_path=__name__, **kwargs)
-        
+        assert len(self.dataInPipe) != 0, "Please enter at least one target data to be printed"
+        self.curFrame = 0
 
     def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:  # type: ignore
         """ This node does print target data for every skipFrames.

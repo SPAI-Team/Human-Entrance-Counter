@@ -1,0 +1,5 @@
+input: ["all"]
+output: ["none"]
+
+dataInPipe: Null # Keys of target data in pipeline to be printed.
+skipFrames: 100 # Number of frames to be skipped before printing the target data.

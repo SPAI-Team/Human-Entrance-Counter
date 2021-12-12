@@ -26,7 +26,7 @@ class Node(AbstractNode):
         axis_y (:obj:`bool`): **default=True
             use a verticle line to act as the virtual barrier
 
-        endpoint (:obj:`str`):
+        endpoint (:obj:`str`): **default=None
             Url link to send Post request of net-footfall
 
         postIntervalTiming (:obj:`int`): **default=5
@@ -36,32 +36,15 @@ class Node(AbstractNode):
             Unique location name which the API Server receives
     '''
 
-    def __init__(
-        self, roi=0.5, axis_y=True, endpoint: str = None,
-        postIntervalTiming: int = 5, location: str = "fc6",
-        config: Dict[str, Any] = None, **kwargs: Any
-    ) -> None:
-        self.__name__ = ''
-
-        self.roi = roi  # Percentage of frame
-        self.axis_y = axis_y  # Orient of virtual line
-        self.footfall = 0  # Current Net Footfall
-        self.pos_hist = dict()  # Dict to record position status (IN:True, OUT:False)
-
-        self.endpoint = endpoint
+    def __init__(self, config: Dict[str, Any] = None, **kwargs: Any) -> None:
+        super().__init__(config, node_path=__name__, **kwargs)
         if self.endpoint is not None:  # If an endpoint is provided
-            self.location = location
             # Initialize pastPostTiming and postInterval
             self.pastPostTiming = datetime.now()
             self.currentTiming = datetime.now()
-            self.postInterval = timedelta(minutes=postIntervalTiming)
-
-        if config is None:
-            config = {
-                "input": ["img", "trackers"],
-                "output": ["footfall"]
-            }
-        super().__init__(config, node_path=__name__, **kwargs)
+            self.postInterval = timedelta(minutes=self.postIntervalTiming)
+        self.footfall = 0  # Current Net Footfall
+        self.pos_hist = dict()  # Dict to record position status (IN:True, OUT:False)
 
     def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
         '''
@@ -160,10 +143,10 @@ class Node(AbstractNode):
 
         # Reset the footfall value if the post request succeeded
         if response.status_code == 200:
-            print(
+            self.logger.info(
                 f"> Post request Sent Successfully at {self.currentTiming.strftime('%Y/%m/%d | %H:%M:%S')}")
             self.footfall = 0
             self.pastPostTiming = datetime.now()
         # Else print out the error
         else:
-            print("An Error occurred during the Post request. Please contact the administrator for more information.")
+            self.logger.warning("An Error occurred during the Post request. Please contact the administrator for more information.")

@@ -43,15 +43,7 @@ class Node(AbstractNode):
     """
 
     def __init__(self, config: Dict[str, Any] = None, **kwargs: Any) -> None:
-        __name__ = ""
-        if config is None:
-            config = {
-                'input': ["all"],
-                'output': ["none"]
-            }
         super().__init__(config, node_path=__name__, **kwargs)
-        self.include = kwargs.get("include", ["all_legend_items"])
-        self.position = kwargs.get("position", "bottom")
         self.all_legend_items = ['fps', 'count', 'zone_count']
         self.legend_items: List[str] = []
 
