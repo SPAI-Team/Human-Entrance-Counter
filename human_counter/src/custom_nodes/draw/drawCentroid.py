@@ -16,14 +16,6 @@ class Node(AbstractNode):
     '''
 
     def __init__(self, config: Dict[str, Any] = None, **kwargs: Any) -> None:
-        self.__name__ = ''
-
-        if config is None:
-            config = {
-                'input': ['img', 'trackers'],
-                'output': ['img']
-            } 
-
         super().__init__(config, node_path = __name__, **kwargs)  
     
     def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:

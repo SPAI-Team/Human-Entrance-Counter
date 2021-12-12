@@ -15,11 +15,11 @@ nodes:
 - dabble.fps
 - draw.bbox
 - custom_nodes.draw.customLegend:
-     include: ["fps", "footfall"]
-     position: "top"
+    include: ["fps", "footfall"]
+    position: "top"
 - draw.blur_bbox
 - custom_nodes.draw.line:
-     roi : 0.5
-     axis_y : True
-# - custom_nodes.draw.drawCentroid
+    roi : 0.5
+    axis_y : True
+- custom_nodes.draw.drawCentroid
 - output.screen
