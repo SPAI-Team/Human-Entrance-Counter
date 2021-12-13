@@ -108,7 +108,31 @@ GET `/latest/:location`
         "location": "fc6"
     }
     ```
+    
+### Get Latest Footfall of a Location within a set number of hours
+GET `/latest/:location/:noHours`
+- Inputs: 
+    - locationname (`string`)
+    - noHours (`string`)
+- Output: 
+    - json object with 1 record
+        - footfallid (`int`)
+        - time (`string in YYYYMMDDhhmmss`)
+        - curentfootfall (`int`)
+        - location (`string`)
+- Example:
+    ```get /latest/fc6/1```
 
+    output:
+    ```
+    {
+        "footfallid": 33,
+        "time": "20211111024500",
+        "currentfootfall": 0,
+        "location": "fc6"
+    }
+    ```
+    
 ### Record Footfall History
 POST `/history`
 - Inputs: 
