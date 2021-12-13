@@ -45,6 +45,17 @@ app.get("/latest/:location", (req, res) => {
     });
 });
 
+// Get latest Footfall analytics for each hour for x no of hours
+app.get("/latest/:location/:noHours", (req, res) => {
+    Footfall.getLatestFootfallByHour(req.params.location, req.params.noHours, (err, footfalls) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send(err);
+        }
+        return res.status(200).send(footfalls);
+    });
+});
+
 // // Get Footfall of a particular date
 // app.get("/history/:date", (req, res) => {
 //     Footfall.getFootfallByTimestamp(req.params.date, (err, footfall) => {
