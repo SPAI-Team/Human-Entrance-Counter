@@ -3,7 +3,6 @@ output: ["img", "pipeline_end"]
 
 url: Null # url to fetch http stream buffer. Raise warning if it is None.
 frames_log_freq : 100 # Logs frequency of frames passed in cli
-resize: # Dimension of extracted image frame
-    - do_resizing: False
-    - width: 500
-    - height: 500
+resize: {"do_resizing": False,
+    "width": 500,
+    "height": 500,}

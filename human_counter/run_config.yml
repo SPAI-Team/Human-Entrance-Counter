@@ -3,7 +3,7 @@ nodes:
     input_source: 0 # Use Webcam
     # input_source: "http://192.168.86.36:8080/stream.mjpeg" # Use http stream
     threading: True
-# - custom_nodes.input.customInput # Use ESP-32 Cam
+# - custom_nodes.input.customInput: # Use ESP-32 Cam
 #       url: "http://192.168.xx.xx/"
 - custom_nodes.draw.rotate:
     rotation: 0
