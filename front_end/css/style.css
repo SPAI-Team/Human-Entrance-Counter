@@ -45,6 +45,7 @@ body {
   font-size: 16px;
   color: #6F8BA4;
   font-weight: 400;
+  background-color: #f0efeb;
 }
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
@@ -458,7 +459,7 @@ a:focus {
 }
 
 .header-top-bar {
-  background: #ede7e3;
+  background: #f0efeb;
   font-size: 14px;
   padding: 20px 0px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
