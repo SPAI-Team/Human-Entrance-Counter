@@ -13,7 +13,12 @@ nodes:
 #     include: ["fps", "footfall"]
 #     position: "top"
 - draw.blur_bbox
+
 # - custom_nodes.draw.line
 # - custom_nodes.draw.drawCentroid
 
-- output.screen
+
+- custom_nodes.draw.line:
+    roi: 0.5
+    axis_y: True
+# - custom_nodes.draw.drawCentroid:
