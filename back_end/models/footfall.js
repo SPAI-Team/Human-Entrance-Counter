@@ -39,7 +39,7 @@ const footfall = {
         });
     },
     getLatestFootfallByHour: function (location, noHours, callback) {
-        pool.query("SELECT ff.time, ff.currentfootfall, ff.location from footfall as ff, (SELECT hourTime, max(minute) as maxMinute, max(second) as maxSecond from (SELECT SUBSTRING(time, 1, 10) as hourTime, SUBSTRING(time, 11, 2) as minute, SUBSTRING(time, 13, 2) as second FROM footfall) as sub1 GROUP BY hourTime ORDER BY hourtime DESC) as sub2 WHERE ff.time = CONCAT(sub2.hourtime, sub2.maxMinute, sub2.maxSecond) ands ff.location = $2 LIMIT $1;", [noHours, location], (err, res) => {
+        pool.query("SELECT ff.time, ff.currentfootfall, ff.location from footfall as ff, (SELECT hourTime, max(minute) as maxMinute, max(second) as maxSecond from (SELECT SUBSTRING(time, 1, 10) as hourTime, SUBSTRING(time, 11, 2) as minute, SUBSTRING(time, 13, 2) as second FROM footfall) as sub1 GROUP BY hourTime ORDER BY hourtime DESC) as sub2 WHERE ff.time = CONCAT(sub2.hourtime, sub2.maxMinute, sub2.maxSecond) and ff.location = $2 LIMIT $1;", [noHours, location], (err, res) => {
             if (err) {
                 return callback(err, null);
             }
