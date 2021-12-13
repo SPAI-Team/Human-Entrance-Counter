@@ -20,10 +20,12 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
 		crossorigin="anonymous"></script>
+		
 
 	<!-- Icon Font Css -->
-	<link rel="stylesheet" href="https://allyoucan.cloud/cdn/icofont/1.0.1/icofont.css"
-		integrity="sha384-jbCTJB16Q17718YM9U22iJkhuGbS0Gd2LjaWb4YJEZToOPmnKDjySVa323U+W7Fv" crossorigin="anonymous">
+	<!-- <link rel="stylesheet" href="https://allyoucan.cloud/cdn/icofont/1.0.1/icofont.css"
+		integrity="sha384-jbCTJB16Q17718YM9U22iJkhuGbS0Gd2LjaWb4YJEZToOPmnKDjySVa323U+W7Fv" crossorigin="anonymous"> -->
+	<link rel="stylesheet" href="./plugins/icofont/icofont.min.css">
 
 	<!-- Ajax axios -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -71,13 +73,13 @@
 
 						<div class="select">
 							<select id="setFoodCourt">
-								<option selected disabled value="fc1">Select a Location</option>
-								<option value="fc1">Food Court 1</option>
-								<option value="fc2">Food Court 2</option>
-								<option value="fc3">Food Court 3</option>
-								<option value="fc4">Food Court 4</option>
-								<option value="fc5">Food Court 5</option>
-								<option value="fc6">Food Court 6</option>
+								<!-- <option selected disabled value="fc1">Select a Location</option> -->
+								<option disabled value="fc1">Food Court 1</option>
+								<option disabled value="fc2">Food Court 2</option>
+								<option disabled value="fc3">Food Court 3</option>
+								<option disabled value="fc4">Food Court 4</option>
+								<option disabled value="fc5">Food Court 5</option>
+								<option selected value="fc6">Food Court 6</option>
 							</select>
 						</div>
 					</div>
@@ -97,7 +99,8 @@
 							<div class="feature-icon mb-4">
 								<i class="icofont-foot-print"></i>
 							</div>
-							<span>Count</span>
+							
+							<span>Head Count</span>
 							<h4 class="mb-3">Current number of visitors</h4>
 							<div id="CurrentFootfall" class="col p-4 mb-4">
 								<!-- <h2>38</h2> -->
@@ -109,7 +112,7 @@
 							<div class="feature-icon mb-4">
 								<i class="icofont-lunch"></i>
 							</div>
-							<span>brief description of how this is calculated?</span>
+							<span>Based on the latest footfall</span>
 							<h4 class="mb-5">Current crowd level</h4>
 							<div class="mb-4" id="crowdLevel">
 
@@ -119,17 +122,22 @@
 								<li class="d-flex justify-content-between" >Estimated Num of seats available :
 									<div id="NumOfSeat"></div>
 								</li>
-								<li class="d-flex justify-content-between">Recommend to go :<span>yes/no?</span></li>
+								
 							</ul>
 						</div>
 
 						<div class="feature-item mb-5 mb-lg-0">
 							<div class="feature-icon mb-4">
-								<i class="icofont-gears"></i>
+								<i class="icofont-robot"></i>
 							</div>
-							<span>To be confirmed</span>
-							<h4 class="mb-3">To be confirmed</h4>
-							<p></p>
+							<span>Suggestion based on the statistics</span>
+							<h4 class="mb-3">Recommendation</h4>
+							<div id="recommend" class="col p-4 mb-4">
+								<!-- <h2>38</h2> -->
+							</div>
+						
+						<span id="recommendtogo"></span>
+						
 						</div>
 					</div>
 				</div>
@@ -139,7 +147,7 @@
 
 	<section>
 		<div class="container mb-5 mt-5" id="history">
-			<h1 class="mb-3 mt-3" id="graph">Graph here</h1>
+			<h1 class="mb-3 mt-3" id="graph">History Statistics</h1>
 			<div id="chart"></div>
 		</div>
 	</section>
@@ -170,210 +178,101 @@
 
 	<link rel="stylesheet" href="css/style.css">
 	<script>
-		$.get(
-		    "https://spai-human-counter-backend-api.herokuapp.com/latest/fc6",
-		    function(data) {
-		    //    alert('hello');
-		    }
-		);
-		var options = {
-			series: [{
-				name: '8am',
-				data: [
-					["2019-11-03", 0],
-					["2019-11-05", 7],
-					["2019-11-12", 2],
-					["2019-11-25", 15],
-					["2019-12-01", 3],
-					["2019-12-03", 4],
-					["2019-12-04", 20],
-					["2019-12-08", 5],
-					["2019-12-11", 12],
-					["2019-12-12", 1],
-					["2019-12-17", 15],
-					["2019-12-18", 8],
-					["2019-12-19", 14],
-					["2019-12-20", 20],
-					["2019-12-21", 3]
-				]
-			},
-			{
-				name: '9am',
-				data: [
-					["2019-11-03", 0],
-					["2019-11-05", 6],
-					["2019-11-12", 20],
-					["2019-11-25", 3],
-					["2019-12-01", 13],
-					["2019-12-03", 4],
-					["2019-12-04", 8],
-					["2019-12-08", 20],
-					["2019-12-11", 6],
-					["2019-12-12", 8],
-					["2019-12-17", 3],
-					["2019-12-18", 8],
-					["2019-12-19", 20],
-					["2019-12-20", 15],
-					["2019-12-21", 7]
-				]
-			},
-			{
-				name: '10am',
-				data: [
-					["2019-11-03", 0],
-					["2019-11-05", 15],
-					["2019-11-12", 2],
-					["2019-11-25", 3],
-					["2019-12-01", 7],
-					["2019-12-03", 4],
-					["2019-12-04", 20],
-					["2019-12-08", 6],
-					["2019-12-11", 15],
-					["2019-12-12", 6],
-					["2019-12-17", 3],
-					["2019-12-18", 17],
-					["2019-12-19", 3],
-					["2019-12-20", 12],
-					["2019-12-21", 8]
-				]
-			},
-			{
-				name: '11am',
-				data: [
-					["2019-11-03", 0],
-					["2019-11-05", 7],
-					["2019-11-12", 2],
-					["2019-11-25", 15],
-					["2019-12-01", 3],
-					["2019-12-03", 4],
-					["2019-12-04", 20],
-					["2019-12-08", 5],
-					["2019-12-11", 12],
-					["2019-12-12", 1],
-					["2019-12-17", 15],
-					["2019-12-18", 12],
-					["2019-12-19", 14],
-					["2019-12-20", 20],
-					["2019-12-21", 3]
-				]
-			},
-			{
-				name: '12pm',
-				data: [
-					["2019-11-03", 15],
-					["2019-11-05", 8],
-					["2019-11-12", 17],
-					["2019-11-25", 3],
-					["2019-12-01", 20],
-					["2019-12-03", 17],
-					["2019-12-04", 6],
-					["2019-12-08", 12],
-					["2019-12-11", 6],
-					["2019-12-12", 4],
-					["2019-12-17", 17],
-					["2019-12-18", 8],
-					["2019-12-19", 14],
-					["2019-12-20", 3],
-					["2019-12-21", 15]
-				]
-			},
-			{
-				name: '1pm',
-				data: [
-					["2019-11-03", 0],
-					["2019-11-05", 7],
-					["2019-11-12", 2],
-					["2019-11-25", 15],
-					["2019-12-01", 3],
-					["2019-12-03", 4],
-					["2019-12-04", 20],
-					["2019-12-08", 5],
-					["2019-12-11", 12],
-					["2019-12-12", 1],
-					["2019-12-17", 15],
-					["2019-12-18", 8],
-					["2019-12-19", 14],
-					["2019-12-20", 20],
-					["2019-12-21", 3]
-				]
-			},
-			{
-				name: '2pm',
-				data: [
-					["2019-11-03", 0],
-					["2019-11-05", 6],
-					["2019-11-12", 20],
-					["2019-11-25", 3],
-					["2019-12-01", 13],
-					["2019-12-03", 4],
-					["2019-12-04", 8],
-					["2019-12-08", 20],
-					["2019-12-11", 6],
-					["2019-12-12", 8],
-					["2019-12-17", 3],
-					["2019-12-18", 17],
-					["2019-12-19", 20],
-					["2019-12-20", 15],
-					["2019-12-21", 7]
-				]
-			},
-			{
-				name: '3pm',
-				data: [
-					["2019-11-03", 0],
-					["2019-11-05", 17],
-					["2019-11-12", 5],
-					["2019-11-25", 8],
-					["2019-12-01", 3],
-					["2019-12-03", 6],
-					["2019-12-04", 17],
-					["2019-12-08", 6],
-					["2019-12-11", 5],
-					["2019-12-12", 3],
-					["2019-12-17", 9],
-					["2019-12-18", 16],
-					["2019-12-19", 14],
-					["2019-12-20", 3],
-					["2019-12-21", 15]
-				]
-			},
-			{
-				name: '4pm',
-				data: [
-					["2019-11-03", 0],
-					["2019-11-05", 7],
-					["2019-11-12", 2],
-					["2019-11-25", 15],
-					["2019-12-01", 3],
-					["2019-12-03", 4],
-					["2019-12-04", 20],
-					["2019-12-08", 5],
-					["2019-12-11", 12],
-					["2019-12-12", 1],
-					["2019-12-17", 15],
-					["2019-12-18", 8],
-					["2019-12-19", 14],
-					["2019-12-20", 20],
-					["2019-12-21", 3]
-				]
-			}
-			],
-			chart: {
-				height: 450,
-				type: 'heatmap',
-			},
-			dataLabels: {
-				enabled: false
-			},
-			colors: ["#14213d"],
-			title: {
-				text: 'Past Statistics'
-			},
-		};
+		
+			axios.get(`https://spai-human-counter-backend-api.herokuapp.com/latest/fc6/9`)
+			.then((response) => {
+				const history = response.data;
+				console.log(history);
+				var Footfall = []
+				const byTime = {}
 
 
-		var chart = new ApexCharts(document.getElementById('chart'), options);
-		chart.render();
+				for(let hr = 8; hr <= 17; hr ++){
+					temp = hr.toString()
+					while (temp.length < 2) {
+						temp = '0' + temp;
+					}
+					byTime[temp] = []
+					for(let day = 14; day >= 0; day--){
+						today = new Date();
+						today.setDate(today.getDate() - day)
+						// byTime[temp].push({x: today.toDateString(), y:0})
+						byTime[temp].push({x: today.getTime(), y:0})
+						// console.log(today);
+					}
+				}
+				console.log(byTime);
+				for (let i = 0; i < history.length; i++){
+					Footfall.push(history[i].currentfootfall)
+					// Date.push(new Date(history[i].time))
+					today = new Date()
+					today.setHours(0, 0, 0, 0)
+					datetime = history[i].time
+					date = `${datetime.substring(0,4)}-${datetime.substring(4,6)}-${datetime.substring(6,8)}`
+					date = new Date(date)
+					date.setHours(0, 0, 0, 0)
+					timeDiff = today.getTime() - date.getTime()
+					dayDiff = timeDiff / (1000 * 3600 * 24)
+					hours = datetime.substring(8,10)
+
+					// console.log(hours);
+					if(byTime[hours] && ((dayDiff - 14) * -1) >= 0){
+						console.log('here');
+						byTime[hours][(dayDiff - 14) * -1].y = history[i].currentfootfall
+					}
+
+					let series = [];
+					
+					Object.keys(byTime).sort().reverse().forEach(hour => {
+						let time = parseInt(hour);
+						let delim = 'a.m.';
+
+						if (time >= 12) {
+							time = (time > 12) ? time - 12 : time
+							delim = 'p.m.';
+						}
+
+						series.push({name: `${time} ${delim}`, data: byTime[hour]})
+					});
+
+					var options = {
+						series,
+						chart: {
+							height: 450,
+							type: 'heatmap',
+						},
+						dataLabels: {
+							enabled: false
+						},
+						colors: ["#14213d"],
+						title: {
+							text: 'Statistics for the past 14 days'
+						},
+						xaxis: {
+							type: "datetime",
+						},
+						tooltip: {
+							x: {
+								format: "ddd, dd MMM yyyy"
+							}
+						},
+					};
+					
+					// console.log(CurrentFootfall);
+
+				}
+		
+				var chart = new ApexCharts(document.getElementById('chart'), options);
+				chart.render();
+
+				console.log(byTime);
+				})
+				// catch any err
+				.catch((error) => {
+					console.log(error)
+				});
+
+
 	</script>
 
 
@@ -417,14 +316,7 @@
 };
 </script> -->
 
-<script>
-	// $.get(
-	// 	"https://spai-human-counter-backend-api.herokuapp.com/latest/fc6",
-	// 	function(data) {
-		// 	    alert('page content: ' + data);
-		// 	    }
-		// 	);
-	</script>
+
 	
 	<!-- <script>
 	$(document).ready(function(){
@@ -468,7 +360,7 @@
 
 				
 				// get footfall based on location
-			axios.get(`https://spai-human-counter-backend-api.herokuapp.com/latest/fc1`)
+			axios.get(`https://spai-human-counter-backend-api.herokuapp.com/latest/fc6`)
 			.then((response) => {
 				const footfall = response.data;
 				var foodcourt = $('#setFoodCourt option:selected').text();
@@ -479,15 +371,32 @@
 					var Seats = 150;
 					Seats = Seats-= (footfall.currentfootfall ?? 0)
 					var crowd = (footfall.currentfootfall / Seats) *100
+					// var crowd = 90
 					const Footfall = `<h2>${footfall.currentfootfall ?? "-"}</h2>`
 					const crowdLevel = `<h3>${crowd.toFixed(2) ?? "-"}%</h3>`
 					const NumOfSeat = `<h4>${Seats ?? "-"}</h4>`
-					// append/p repend items
+					var recommend;
+					var togo;
+					if (crowd <40) {
+						recommend = 'Yes'
+						togo = `<svg class="w-6 h-6" width="35" fill="#40916c" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>&nbsp Suggested to go`
+						
+					} else if (crowd >= 40 && crowd < 85){
+						recommend = 'Maybe'
+						togo = `<svg class="w-6 h-6" width="35" fill="#f4a261" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>&nbsp Caution`
+						
+					} else {
+						recommend = 'No'
+						
+						togo = `<svg class="w-6 h-6" width="35" fill="#9d0208" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd"></path></svg> &nbsp Not suggested to go`
+					}
+					const recommendation = `<h2>${recommend}</h2>`
 					
 					$("#CurrentFootfall").html(Footfall)
 					$("#NumOfSeat").html(NumOfSeat)
 					$('#crowdLevel').html(crowdLevel)
-					
+					$('#recommend').html(recommendation)
+					$('#recommendtogo').html(togo)
 				})
 				// catch any err
 				.catch((error) => {
@@ -504,7 +413,7 @@
 					// alert('page content: ' + response.data[0]);
 					console.log(footfall.currentfootfall);
 					// show current footfall
-					var Seats = 150;
+					var Seats = 100;
 					Seats = Seats-= (footfall.currentfootfall ?? 0)
 					var crowd = (footfall.currentfootfall / Seats) *100
 					const Footfall = `<h2>${footfall.currentfootfall ?? "-"}</h2>`
