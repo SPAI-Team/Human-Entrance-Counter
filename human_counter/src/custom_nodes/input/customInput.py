@@ -31,13 +31,9 @@ class Node(AbstractNode):
             Logs frequency of frames passed in cli
     """
 
-    def __init__(
-            self, url: str, 
-            config: Dict[str, Any] = None, 
-            **kwargs: Any
-        ) -> None:
+    def __init__(self, config: Dict[str, Any] = None, **kwargs: Any) -> None:
         super().__init__(config, node_path=__name__, **kwargs)
-        assert url is not None, "Source url cannot be None. Please specify a url to fetch stream buffer."
+        assert self.url is not None, "Source url cannot be None. Please specify a url to fetch stream buffer."
         self.bts = b''
         self.img=None
         self.CAMERA_BUFFRER_SIZE = 4096
