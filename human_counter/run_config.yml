@@ -18,3 +18,4 @@ nodes:
     roi: 0.5
     axis_y: True
 - custom_nodes.draw.drawCentroid
+- output.screen
