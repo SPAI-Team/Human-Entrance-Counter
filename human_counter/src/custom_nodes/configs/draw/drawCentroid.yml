@@ -1,8 +1,2 @@
 input: ["img","trackers"]
 output: ["img"]
-
-if config is None:
-    config = {
-      'input': ['img', 'trackers'],
-      'output': ['img']
-  } 

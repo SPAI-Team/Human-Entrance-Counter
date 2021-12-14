@@ -17,4 +17,5 @@ nodes:
 - custom_nodes.draw.line:
     roi: 0.5
     axis_y: True
-- custom_nodes.draw.drawCentroid:
+- custom_nodes.draw.drawCentroid
+
