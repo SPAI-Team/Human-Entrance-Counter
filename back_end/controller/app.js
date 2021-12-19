@@ -75,7 +75,8 @@ app.post("/history", (req, res) => {
             console.log(err);
             return res.status(500).send(err);
         }
-        if(footfall){
+        // Check if there is a footfall record for the location and if it is a new day
+        if(footfall && footfall.time.substring(0, 8) == req.body.time.substring(0,8)){
             netFootfall += footfall.currentfootfall;
         }
 
