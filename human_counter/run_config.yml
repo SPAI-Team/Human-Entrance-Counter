@@ -1,7 +1,7 @@
 nodes:
 - input.live:
     input_source: 0 # Use Webcam
-    # input_source: "http://192.168.86.36:8080/stream.mjpeg" # Use http stream
+    input_source: "http://192.168.10.145:8080/stream.mjpeg" # Use http stream
     threading: True
 # - custom_nodes.input.customInput: # Use ESP-32 Cam
 #       url: "http://192.168.xx.xx/"
@@ -23,3 +23,5 @@ nodes:
     axis_y : True
 - custom_nodes.draw.drawCentroid
 - output.screen
+- output.media_writer:
+    output_dir: 'C:\Users\amir_\OneDrive - Singapore Polytechnic\VSC\PROGRAMMING\PYTHON\Python\SPAI_HumanCounter\human_counter\media'
