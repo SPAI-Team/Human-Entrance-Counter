@@ -1,7 +1,7 @@
 nodes:
 - input.live:
     input_source: 0 # Use Webcam
-    input_source: "http://192.168.10.145:8080/stream.mjpeg" # Use http stream
+    # input_source: "http://192.168.207.88:8080/stream.mjpeg" # Use http stream
     threading: True
 # - custom_nodes.input.customInput: # Use ESP-32 Cam
 #       url: "http://192.168.xx.xx/"
@@ -17,7 +17,7 @@ nodes:
 - custom_nodes.draw.customLegend:
     include: ["fps", "footfall"]
     position: "top"
-- draw.blur_bbox
+# - draw.blur_bbox
 - custom_nodes.draw.line:
     roi : 0.5
     axis_y : True
